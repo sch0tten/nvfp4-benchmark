@@ -131,19 +131,40 @@ def main():
             w.writerow([aid, meta["family"], meta["type"], meta["format"], meta["size_gb"]]
                        + [tp.get(c, "") for c in cols])
 
-    # ---- summary.md ----
+    # ---- summary.md: grouped by model, per-format avg + delta vs BF16 ----
+    models = []
+    for meta in arms.values():
+        if meta["model"] not in models:
+            models.append(meta["model"])
+    fmt_order = ["bf16", "fp8", "int4_awq", "nvfp4"]
     with open(out / "summary.md", "w") as f:
         f.write("# Results summary (auto-generated)\n\n")
         f.write(f"Quality arms with data: {sum(1 for a in arms if Q.get(a))}/{len(arms)}; "
-                f"throughput arms with data: {sum(1 for a in arms if Tp.get(a))}/{len(arms)}\n\n")
-        f.write("## Quality (higher better) + avg delta vs same-model BF16\n\n")
-        f.write("| arm | " + " | ".join(TASKS) + " | avg | Δvsbf16 |\n")
-        f.write("|" + "---|" * (len(TASKS) + 3) + "\n")
-        for aid, meta in arms.items():
-            row = Q.get(aid, {})
-            cells = [("" if row.get(t) is None else f"{row[t]:.1f}") for t in TASKS]
-            f.write(f"| {aid} | " + " | ".join(cells) + " |  |  |\n")
-    print(f"Wrote {out}/quality.csv, throughput.csv, summary.md "
+                f"throughput arms with data: {sum(1 for a in arms if Tp.get(a))}/{len(arms)}\n")
+        for mk in models:
+            marms = {aid: m for aid, m in arms.items() if m["model"] == mk}
+            fam = next(iter(marms.values()))["family"]
+            bf = Q.get(f"{mk}__bf16", {})
+            f.write(f"\n## {fam}\n\n| format | " + " | ".join(TASKS) + " | avg | Δ vs BF16 | tput@128 | weight GB |\n")
+            f.write("|" + "---|" * (len(TASKS) + 4) + "\n")
+            for fmt in fmt_order:
+                aid = f"{mk}__{fmt}"
+                if aid not in marms:
+                    continue
+                row = Q.get(aid, {})
+                vals = [row.get(t) for t in TASKS]
+                pres = [v for v in vals if v is not None]
+                avg = sum(pres) / len(pres) if pres else None
+                common = [t for t in TASKS if row.get(t) is not None and bf.get(t) is not None]
+                delta = (sum(row[t] for t in common) - sum(bf[t] for t in common)) / len(common) if common else None
+                tp = Tp.get(aid, {}).get("decode_tok_s@128")
+                gb = marms[aid].get("size_gb")
+                cells = [("·" if v is None else f"{v:.1f}") for v in vals]
+                f.write(f"| {fmt} | " + " | ".join(cells)
+                        + f" | {'·' if avg is None else f'{avg:.1f}'}"
+                        + f" | {'·' if delta is None else f'{delta:+.1f}'}"
+                        + f" | {'·' if tp is None else tp} | {gb} |\n")
+    print(f"Wrote {out}/quality.csv, throughput.csv, summary.md, cross_validation (run separately) "
           f"({sum(1 for a in arms if Q.get(a))} quality, {sum(1 for a in arms if Tp.get(a))} throughput arms)")
 
 
