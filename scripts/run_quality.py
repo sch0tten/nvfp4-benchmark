@@ -28,7 +28,9 @@ import yaml
 # aime25 dropped: at greedy single-pass it sits at the floor (0/15 in validation)
 # and overflows the thinking budget, giving no quantization-degradation signal.
 GEN_TASKS = ["mmlu_pro", "gsm8k", "ifeval", "humaneval_instruct", "mbpp_instruct"]
-TASK_LIMITS = {"mmlu_pro": 2000}     # tasks not listed -> full dataset
+# mmlu_pro is a GROUP of 14 subjects and --limit applies PER subject, so 100 ->
+# ~1400 items, subject-stratified. Other tasks (not listed) run on the full dataset.
+TASK_LIMITS = {"mmlu_pro": 100}
 EVAL_MAX_LEN = 16384
 MAX_GEN_TOKS = 4096                   # room for chain-of-thought / thinking
 UNTIL = '["<|im_end|>"]'             # replace lm-eval's premature "\n\n" stop
