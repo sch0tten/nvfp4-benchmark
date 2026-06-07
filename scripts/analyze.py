@@ -13,15 +13,13 @@ import yaml
 # Headline metric per task: try these result-keys in order (lm-eval uses
 # "<metric>,<filter>" keys, e.g. "acc,none").
 TASK_METRIC = {
-    "mmlu":          ["acc,none", "acc"],
-    "gsm8k":         ["exact_match,flexible-extract", "exact_match,strict-match", "exact_match,none"],
-    "arc_challenge": ["acc_norm,none", "acc_norm", "acc,none"],
-    "hellaswag":     ["acc_norm,none", "acc_norm"],
-    "ifeval":        ["prompt_level_strict_acc,none", "inst_level_strict_acc,none"],
-    "gpqa_diamond_cot_zeroshot": ["exact_match,flexible-extract", "exact_match,none", "acc,none", "acc_norm,none"],
-    "mmlu_pro":      ["exact_match,custom-extract", "exact_match,none", "acc,none"],
-    "humaneval":     ["pass@1,none", "pass@1,create_test", "pass@1"],
-    "mbpp":          ["pass@1,none", "pass@1"],
+    "mmlu_pro":                  ["exact_match,custom-extract", "exact_match,none", "acc,none"],
+    "gpqa_diamond_cot_zeroshot": ["exact_match,flexible-extract", "exact_match,none", "acc,none"],
+    "gsm8k":                     ["exact_match,flexible-extract", "exact_match,strict-match", "exact_match,none"],
+    "aime25":                    ["exact_match,none", "acc,none", "exact_match,flexible-extract"],
+    "ifeval":                    ["prompt_level_strict_acc,none", "inst_level_strict_acc,none"],
+    "humaneval":                 ["pass@1,none", "pass@1,create_test", "pass@1"],
+    "mbpp":                      ["pass@1,none", "pass@1"],
 }
 TASKS = list(TASK_METRIC)
 
