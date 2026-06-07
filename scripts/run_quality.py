@@ -28,9 +28,10 @@ import yaml
 # aime25 dropped: at greedy single-pass it sits at the floor (0/15 in validation)
 # and overflows the thinking budget, giving no quantization-degradation signal.
 GEN_TASKS = ["mmlu_pro", "gsm8k", "ifeval", "humaneval_instruct", "mbpp_instruct"]
-# mmlu_pro is a GROUP of 14 subjects and --limit applies PER subject, so 100 ->
-# ~1400 items, subject-stratified. Other tasks (not listed) run on the full dataset.
-TASK_LIMITS = {"mmlu_pro": 100}
+# mmlu_pro is a GROUP of 14 subjects and --limit applies PER subject (50 -> ~700,
+# subject-stratified). gsm8k capped to keep the thinking-heavy run tractable; the
+# rest run on the full dataset. SAME standard for every arm.
+TASK_LIMITS = {"mmlu_pro": 50, "gsm8k": 600}
 EVAL_MAX_LEN = 16384
 MAX_GEN_TOKS = 4096                   # room for chain-of-thought / thinking
 UNTIL = '["<|im_end|>"]'             # replace lm-eval's premature "\n\n" stop
@@ -57,7 +58,7 @@ def model_args(arm):
         f"pretrained={arm['repo']}", f"revision={arm['revision']}",
         f"tokenizer={arm['repo']}", f"tokenizer_revision={arm['revision']}",
         "dtype=auto", f"max_model_len={EVAL_MAX_LEN}", "gpu_memory_utilization=0.90",
-        "max_num_seqs=192",  # decode amortization; <= Mamba cache blocks even for the 72GB MoE-BF16 arm
+        "max_num_seqs=64",   # modest eval batch (agentic-leaning); does NOT affect scores, only wall-clock
         "tensor_parallel_size=1", "trust_remote_code=True", "enforce_eager=False",
     ])
 
