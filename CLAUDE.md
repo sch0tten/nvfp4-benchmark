@@ -25,6 +25,12 @@ publishable report for **URE.us**.
   the pip-bundled toolkit in the venv: `.../.venv-vllm022/.../nvidia/cu13` (has nvcc
   13.3 + include/lib/nvvm). All run scripts `source ~/bench-nvfp4/cuda_env.sh` first.
   First NVFP4 load JIT-compiles the kernel (~1-3 min, then cached in ~/.cache/flashinfer).
+- **Qwen3.6 hybrid-attention gotcha:** Qwen3.6 (dense + MoE) uses linear attention with a
+  Mamba-style state cache; vLLM caps `max_num_seqs` to the number of Mamba cache blocks,
+  which shrinks as weights grow. lm-eval's default (1024) exceeds it for the big BF16 arms
+  → "exceeds available Mamba cache blocks" + cudagraph-capture failure. Eval therefore runs
+  with `max_num_seqs=64` (safe across all 16 arms; cudagraphs preserved). Throughput uses
+  `--max-num-seqs 1`, so it is unaffected.
 
 ## SECRETS OVERRIDE — explicit user instruction, 2026-06-07
 Per a direct user instruction, **this project's Hugging Face read token is stored in

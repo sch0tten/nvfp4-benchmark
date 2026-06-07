@@ -155,10 +155,29 @@ equal bit-width; when FP8 is the safer choice; the dense-vs-MoE angle.]*
 
 ## 7. Limitations
 
-Single GPU, single run per (arm,task) unless noted; recipe heterogeneity across arms
-(§3.3); greedy non-thinking evaluation (absolute scores lower than vendor
-"thinking-mode" numbers — we rely on *deltas*); coding tasks executed in a permissive
-local sandbox; text-only evaluation of multimodal-capable models.
+We state these plainly so the numbers are read for exactly what they are.
+
+1. **Recipe heterogeneity (§3.3).** Each "FP8/INT4/NVFP4" arm is the most-deployed
+   quant for *that* model, and the recipes protect different layers. We report
+   per-format effects and same-model deltas, not a pure number-format isolation.
+2. **Within-model deltas are the robust quantity.** Absolute scores depend on the
+   generative protocol and on each model's native chat behaviour (Qwen reasons in
+   `<think>` blocks, Gemma answers directly), so cross-*model* absolute comparisons
+   are indirect. The quantization delta (arm vs its own BF16) is what we trust, and
+   what the cross-validation against NVIDIA checks.
+3. **Coverage caps.** MMLU-Pro is scored on 2000 of 12032 items (identical subset
+   across arms); GPQA-Diamond is held out (HF-gated dataset); AIME-2025 is dropped
+   (greedy single-pass floors at 0). Tiny sub-1% deltas are therefore at the edge of
+   resolution — we lean on the cross-validation and the aggregate across tasks.
+4. **Single GPU, single run** per (arm, task); the only dispersion is lm-eval's
+   per-task stderr. No multi-seed averaging.
+5. **KV-cache precision varies by arm** (the NVFP4 arms ship FP8 KV-cache). This is
+   part of the *deployed* configuration we deliberately measure, but it means arms
+   differ in more than just weight precision.
+6. **Engine.** vLLM 0.22.1 with a JIT-compiled FlashInfer SM120 NVFP4 cutlass kernel;
+   numerical parity is assumed and checked only indirectly via cross-validation.
+7. **Coding** is executed in a permissive local sandbox; **multimodal** models are
+   evaluated on their text path only.
 
 ## 8. Conclusion
 

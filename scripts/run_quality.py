@@ -55,6 +55,7 @@ def model_args(arm):
         f"pretrained={arm['repo']}", f"revision={arm['revision']}",
         f"tokenizer={arm['repo']}", f"tokenizer_revision={arm['revision']}",
         "dtype=auto", f"max_model_len={EVAL_MAX_LEN}", "gpu_memory_utilization=0.90",
+        "max_num_seqs=64",   # Qwen3.6 hybrid linear-attn caps batch by Mamba cache blocks
         "tensor_parallel_size=1", "trust_remote_code=True", "enforce_eager=False",
     ])
 
