@@ -1,0 +1,16 @@
+# Secrets — never commit (see CLAUDE.md SECRETS OVERRIDE)
+.env
+.env.*
+*.env
+
+# Python / venv
+__pycache__/
+*.pyc
+.venv/
+.venv-*/
+
+# Large artifacts / raw run logs (keep curated results/ in git, not raw dumps)
+results/raw/
+*.safetensors
+*.bin
+models/

@@ -1,0 +1,94 @@
+# ============================================================================
+# Canonical model matrix — NVFP4 quantization benchmark (URE.us)
+# ----------------------------------------------------------------------------
+# 4 "seed" models (2 dense + 2 MoE) x 4 quantization formats = 16 arms.
+# Every arm is pinned to an exact Hugging Face commit SHA for bit-exact
+# reproduction. Recipes were read directly from each repo's config.json /
+# hf_quant_config.json on 2026-06-07 and are summarized verbatim below.
+#
+# READ THIS BEFORE INTERPRETING RESULTS — recipe heterogeneity is real:
+#   "FP8", "INT4" and "NVFP4" are NOT byte-identical recipes across models.
+#   Each arm is the *most-downloaded, real-world* official/community quant for
+#   that exact model — the "as-actually-deployed / hybrid" comparison that was
+#   requested — but recipes differ in WHICH layers stay in high precision. The
+#   paper reports each recipe explicitly and frames results as "best-available
+#   quant per format", NOT a pure number-format isolation.
+#
+# NVFP4 provenance: 3 of 4 are OFFICIAL NVIDIA (NVIDIA Model Optimizer); the
+#   Qwen-dense NVFP4 is the most-downloaded community quant (unsloth), as no
+#   NVIDIA release exists for it.
+# ============================================================================
+
+meta:
+  hardware: "ai02 / NVIDIA RTX PRO 6000 Blackwell Max-Q 96GB (sm_120), CUDA 13.2, driver 595.71.05, Xeon w3-2423, 125GB RAM"
+  engine: "vLLM 0.22.1, torch 2.11.0, transformers 5.10.2, compressed-tensors 0.15.0.1, flashinfer 0.6.11"
+  serving_throughput:        # user directive — the single-stream / low-TTFT regime
+    max_num_seqs: 1
+    max_model_len: 65536
+    gpu_memory_utilization: 0.90
+  eval_protocol:
+    harness: "EleutherAI lm-evaluation-harness (in-process vLLM backend)"
+    note: "Eval uses internal batching (max_num_seqs left at vLLM default) — loglikelihood/greedy scores are batch-size-invariant, so batching changes speed, not results. Throughput (above) is measured separately at max_num_seqs=1."
+    max_model_len: 16384
+    decoding: "greedy (temperature=0) for reproducibility"
+    chat_template: "applied (--apply_chat_template, --fewshot_as_multiturn); all four seeds are instruction-tuned chat models"
+    tasks: [mmlu, gsm8k, arc_challenge, hellaswag, ifeval, gpqa_diamond, mmlu_pro, humaneval, mbpp]
+
+models:
+
+  # ========================= DENSE =========================
+  qwen3_6_27b:
+    family: "Qwen3.6-27B"
+    vendor: "Alibaba / Qwen"
+    type: dense
+    architecture: "Qwen3_5ForConditionalGeneration"   # hybrid (linear_attn) + vision tower; TEXT path benchmarked
+    params_total: "27B"
+    params_active: "27B"
+    arms:
+      bf16:    {role: reference, repo: "Qwen/Qwen3.6-27B",            revision: "6a9e13bd6fc8f0983b9b99948120bc37f49c13e9", size_gb: 55.6, downloads_30d: 5541236, provenance: "official", recipe: "bfloat16 (unquantized reference)"}
+      fp8:     {repo: "Qwen/Qwen3.6-27B-FP8",                         revision: "e89b16ebf1988b3d6befa7de50abc2d76f26eb09", size_gb: 30.9, downloads_30d: 7319461, provenance: "official", recipe: "fine-grained block-128 FP8 (weights+activations)"}
+      int4_awq:{repo: "QuantTrio/Qwen3.6-27B-AWQ",                    revision: "9b507bdc9afafb87b7898700cc2a591aa6639461", size_gb: 21.9, downloads_30d: 731622,  provenance: "community (QuantTrio)", recipe: "AWQ 4-bit, group_size 128; keeps self_attn q/k/v, layer 0, linear_attn, vision, MTP in BF16"}
+      nvfp4:   {repo: "unsloth/Qwen3.6-27B-NVFP4",                    revision: "890bdef7a42feba6d83b6e17a03315c694112f2a", size_gb: 26.4, downloads_30d: 685865,  provenance: "community (unsloth) — user-selected; no NVIDIA release exists", recipe: "compressed-tensors nvfp4-pack-quantized; 4-bit weights+activations, group_size 16, FP8(e4m3) block scales; only vision tower excluded; KV-cache NOT quantized"}
+
+  gemma4_31b_it:
+    family: "Gemma-4-31B-it"
+    vendor: "Google"
+    type: dense
+    architecture: "Gemma4ForConditionalGeneration"
+    params_total: "31B"
+    params_active: "31B"
+    arms:
+      bf16:    {role: reference, repo: "google/gemma-4-31B-it",       revision: "3548789868c5356dbf307c98e6f609007b82b3eb", size_gb: 62.6, downloads_30d: 11182475, gated: true, provenance: "official", recipe: "bfloat16 (unquantized reference)"}
+      fp8:     {repo: "RedHatAI/gemma-4-31B-it-FP8-block",            revision: "f676bf1357a9d27a77932dd4bf19d619724e74f6", size_gb: 33.3, downloads_30d: 290424, provenance: "RedHatAI / Neural Magic", recipe: "compressed-tensors FP8 block (group_size 128, dynamic activations); excludes vision, lm_head, embed_tokens"}
+      int4_awq:{repo: "QuantTrio/gemma-4-31B-it-AWQ",                 revision: "200d06ee83eb49a03c6e3120dbf7b09191eb1539", size_gb: 20.5, downloads_30d: 232045, provenance: "community (QuantTrio)", recipe: "AWQ 4-bit, group_size 128"}
+      nvfp4:   {repo: "nvidia/Gemma-4-31B-IT-NVFP4",                  revision: "e5ef03afa233c35cb000323ff098d4291e1dd07c", size_gb: 32.7, downloads_30d: 2243359, provenance: "official NVIDIA (modelopt 0.37.0)", recipe: "modelopt NVFP4; 4-bit weights+activations, group_size 16; KV-cache FP8; excludes lm_head, vision embeds, and self_attn of many layers (attention largely kept BF16)",
+                published_accuracy: {gpqa_diamond: {bf16: 85.80, nvfp4: 85.35}, aime_2025: {bf16: 87.92, nvfp4: 87.60}, mmlu_pro: {bf16: 85.25, nvfp4: 84.94}}}
+
+  # ========================= MoE =========================
+  qwen3_6_35b_a3b:
+    family: "Qwen3.6-35B-A3B"
+    vendor: "Alibaba / Qwen"
+    type: moe
+    architecture: "Qwen3_5MoeForConditionalGeneration"
+    params_total: "35B"
+    params_active: "3B"
+    arms:
+      bf16:    {role: reference, repo: "Qwen/Qwen3.6-35B-A3B",        revision: "995ad96eacd98c81ed38be0c5b274b04031597b0", size_gb: 71.9, downloads_30d: 5852936, provenance: "official", recipe: "bfloat16 (unquantized reference)"}
+      fp8:     {repo: "Qwen/Qwen3.6-35B-A3B-FP8",                     revision: "95a723d08a9490559dae23d0cff1d9466213d989", size_gb: 37.5, downloads_30d: 5578604, provenance: "official", recipe: "fine-grained block-128 FP8"}
+      int4_awq:{repo: "QuantTrio/Qwen3.6-35B-A3B-AWQ",                revision: "119886a1072372348f73ef0df2d801cdcc0f455b", size_gb: 25.5, downloads_30d: 657724, provenance: "community (QuantTrio)", recipe: "AWQ 4-bit, group_size 128"}
+      nvfp4:   {repo: "nvidia/Qwen3.6-35B-A3B-NVFP4",                 revision: "6c7f09d4036e97393f82e9f9ecd1a5c35ca5ee92", size_gb: 23.5, downloads_30d: 1185362, provenance: "official NVIDIA (modelopt 0.44.0)", recipe: "modelopt MIXED_PRECISION: linear_attn -> FP8, MoE experts + shared_expert -> W4A16 NVFP4 group_size 16; KV-cache FP8",
+                published_accuracy: {mmlu_pro: {bf16: 85.6, nvfp4: 85.0}, gpqa_diamond: {bf16: 84.9, nvfp4: 84.8}, aime_2025: {bf16: 89.2, nvfp4: 88.8}, scicode: {bf16: 40.8, nvfp4: 40.6}}}
+
+  gemma4_26b_a4b_it:
+    family: "Gemma-4-26B-A4B-it"
+    vendor: "Google"
+    type: moe
+    architecture: "Gemma4ForConditionalGeneration"     # MoE: 128 experts, 8 active
+    params_total: "25.2B"
+    params_active: "3.8B"
+    arms:
+      bf16:    {role: reference, repo: "google/gemma-4-26B-A4B-it",   revision: "20da991ab4afab98e8f910c4a2e8f4fbefc404ad", size_gb: 51.6, downloads_30d: 12161679, gated: true, provenance: "official", recipe: "bfloat16 (unquantized reference)"}
+      fp8:     {repo: "RedHatAI/gemma-4-26B-A4B-it-FP8-Dynamic",      revision: "8edbb9269ec9c3faad538ee1208a07eb46051f34", size_gb: 28.7, downloads_30d: 443519, provenance: "RedHatAI / Neural Magic", recipe: "compressed-tensors FP8 dynamic (weights+dynamic activations)"}
+      int4_awq:{repo: "cyankiwi/gemma-4-26B-A4B-it-AWQ-4bit",         revision: "4033b16200f4152e55e100ea12dc388c537df622", size_gb: 17.2, downloads_30d: 5098913, provenance: "community (cyankiwi) — dominant INT4 deployment for this model", recipe: "AWQ-calibrated 4-bit, compressed-tensors W4A16 packing"}
+      nvfp4:   {repo: "nvidia/Gemma-4-26B-A4B-NVFP4",                 revision: "a19cfe00be84568a6867111c9a68c9c44fdcffe6", size_gb: 18.8, downloads_30d: 1197445, provenance: "official NVIDIA (modelopt 0.43.0)", recipe: "modelopt NVFP4 'nvfp4_experts_only'; 4-bit weights+activations, group_size 16; KV-cache FP8; experts quantized, attention/router/embeds largely BF16",
+                published_accuracy: {gpqa_diamond: {bf16: 80.30, nvfp4: 79.90}, aime_2025: {bf16: 88.95, nvfp4: 90.00}, mmlu_pro: {bf16: 85.00, nvfp4: 84.80}, ifeval: {bf16: 96.60, nvfp4: 96.40}}}
