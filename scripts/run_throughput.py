@@ -18,10 +18,10 @@
 import argparse, json, os, pathlib, re, statistics, subprocess, sys, time
 import yaml
 
-PROMPT_LENS = [128, 1024, 4096, 16384, 60000]   # incl. a ~64k long-context point
+PROMPT_LENS = [128, 1024, 4096, 16384, 32768]   # short -> long-context within the 64k window
 DECODE_N = 256
 WARMUP = 1
-REPEATS = 5
+REPEATS = 3
 MAX_MODEL_LEN = 65536
 FIXED_TEXT = (  # deterministic filler, sliced to exact token lengths
     "In high performance computing the movement of data dominates the cost of "
@@ -83,21 +83,20 @@ def run_worker(arm):
 
 
 # --------------------------- orchestrator ---------------------------
-MEM_PATTERNS = [
-    re.compile(r"Model weights take ([\d.]+)\s*GiB"),
-    re.compile(r"GPU KV cache size: ([\d,]+) tokens"),
-    re.compile(r"Maximum concurrency for ([\d,]+) tokens"),
-    re.compile(r"# GPU blocks: (\d+)"),
-]
+RE_WEIGHTS = re.compile(r"Model loading took ([\d.]+) GiB")        # vLLM 0.22 wording
+RE_WEIGHTS2 = re.compile(r"Model weights take ([\d.]+)\s*GiB")     # fallback
+RE_KV_TOK = re.compile(r"GPU KV cache size: ([\d,]+) tokens")
+RE_KV_GIB = re.compile(r"KV cache.*?([\d.]+)\s*GiB")
+RE_BLOCKS = re.compile(r"# GPU blocks: (\d+)")
 
 
 def parse_mem(logtext):
     out = {}
-    m = MEM_PATTERNS[0].search(logtext)
+    m = RE_WEIGHTS.search(logtext) or RE_WEIGHTS2.search(logtext)
     if m: out["model_weights_gib"] = float(m.group(1))
-    m = MEM_PATTERNS[1].search(logtext)
+    m = RE_KV_TOK.search(logtext)
     if m: out["kv_cache_tokens"] = int(m.group(1).replace(",", ""))
-    m = MEM_PATTERNS[3].search(logtext)
+    m = RE_BLOCKS.search(logtext)
     if m: out["gpu_kv_blocks"] = int(m.group(1))
     return out
 

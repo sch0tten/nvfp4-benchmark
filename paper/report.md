@@ -79,14 +79,25 @@ NVFP4 is explicitly *mixed precision* (linear-attention in FP8, experts in NVFP4
 We therefore frame results as **"best-available quant per format, as deployed,"** not
 a pure number-format isolation, and we report each recipe verbatim.
 
-### 3.4 Quality protocol
-EleutherAI lm-evaluation-harness with the in-process vLLM backend. Nine tasks:
-`mmlu`, `gsm8k`, `arc_challenge`, `hellaswag`, `ifeval`, `gpqa_diamond_cot_zeroshot`,
-`mmlu_pro`, `humaneval`, `mbpp`. Greedy decoding (temperature 0) for reproducibility;
-each model's chat template applied (`--apply_chat_template --fewshot_as_multiturn`);
-identical protocol across all 16 arms; fixed seed 1234. Eval uses vLLM internal
-batching — loglikelihood/greedy scores are batch-size-invariant, so batching affects
-speed, not results. (`scripts/run_quality.py`)
+### 3.4 Quality protocol — generative, and validated (not assumed)
+EleutherAI lm-evaluation-harness (in-process vLLM). We evaluate **generatively**,
+with each model's chat template and **greedy decoding** (temperature 0), in each
+arm's *deployed* configuration. This was validated empirically, not assumed.
+Loglikelihood multiple-choice scoring — the classic Open-LLM-Leaderboard method —
+proved unreliable for these instruction-tuned models: the **BF16 reference**
+`google/gemma-4-31B-it` scored only **0.42** acc_norm on ARC-Challenge (25-shot)
+versus its true ~0.88. Because the BF16 reference *itself* is broken, this is a
+loglikelihood/instruct-model miscalibration (compounded on quantized arms by their
+FP8 KV-cache), not a quantization effect. Generative evaluation instead (a) reflects
+how these reasoning/agentic models are actually used, (b) matches the protocol NVIDIA
+uses for its published numbers — enabling direct cross-validation, and (c) produced
+sane results on the same hardware (NVFP4 `gsm8k` = **0.97**).
+
+Suite (reasoning · instruction-following · coding): `mmlu_pro`, `gpqa_diamond`,
+`gsm8k`, `aime25`, `ifeval`, `humaneval`, `mbpp`. Identical protocol across all 16
+arms; fixed seed 1234; each model in its native chat behaviour. Comparing an arm to
+its same-model BF16 reference isolates the quantization-induced quality delta.
+(`scripts/run_quality.py`)
 
 ### 3.5 Throughput protocol — single-stream, the low-TTFT regime
 Every arm served at `--max-num-seqs 1`, `--max-model-len 65536`. We report, with
