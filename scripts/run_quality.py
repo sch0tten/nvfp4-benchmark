@@ -2,31 +2,34 @@
 # ============================================================================
 # Quality matrix runner — EleutherAI lm-evaluation-harness over the 16 arms.
 #
-# GENERATIVE protocol (chat-templated, greedy). Chosen after validation showed
+# GENERATIVE protocol (chat-templated, greedy), validated empirically:
 # loglikelihood multiple-choice scoring is unreliable for these instruction-
-# tuned models (BF16 ARC-Challenge 25-shot scored ~0.39 vs a true ~0.9 — a
-# known instruct-model loglikelihood miscalibration, compounded on the
-# quantized arms by their FP8 KV-cache). Generative evaluation is:
-#   (a) how these reasoning/agentic instruct models are actually used,
-#   (b) how NVIDIA reports its NVFP4 numbers (enables direct cross-validation),
-#   (c) fair across arms — each runs in its own deployed config.
+# tuned models (BF16 Gemma-4-31B-it ARC-25shot = 0.42 vs true ~0.88), so we
+# evaluate generatively — how these reasoning/agentic models are actually used,
+# and how NVIDIA reports (enables cross-validation). Two engineering fixes were
+# required and are baked in here:
+#   * until override: lm-eval's default stop ("\n\n") prematurely truncates chat
+#     models (Qwen emitted a 1-line preamble then stopped). We stop on the chat
+#     turn-end / EOS instead -> Qwen gsm8k jumps 0.0 -> 1.0.
+#   * coding uses *_instruct tasks (extract code from chat/markdown output).
 #
-# Suite (reasoning + instruction-following + coding):
-#   mmlu_pro, gpqa_diamond_cot_zeroshot, gsm8k, aime25, ifeval, humaneval, mbpp
-#
-#   * In-process vLLM backend; each arm pinned to its commit SHA.
-#   * One lm-eval invocation per arm (one model load). Resumable via per-arm
-#     `.done` sentinel + lm-eval --use_cache. Continues on failure; logged.
+# EXECUTION: one lm-eval call per (arm, task) -> per-task resumability (a gated
+# dataset or transient failure costs one task, not the whole arm) and per-task
+# sample caps (MMLU-Pro is 12k items; capped for tractability, others full).
+# Results merge into results/quality/<arm>.json.
 #
 # Run ON ai02 via scripts/launch_quality.sh (sets CUDA_HOME, HF_TOKEN, code-eval).
 # ============================================================================
 import argparse, datetime, glob, json, os, pathlib, shutil, subprocess, sys, time
 import yaml
 
-GEN_TASKS = ["mmlu_pro", "gpqa_diamond_cot_zeroshot", "gsm8k", "aime25",
-             "ifeval", "humaneval", "mbpp"]
+# gpqa_diamond_cot_zeroshot omitted by default (its dataset Idavidrein/gpqa is
+# HF-gated); add via --tasks once access is granted.
+GEN_TASKS = ["mmlu_pro", "gsm8k", "aime25", "ifeval", "humaneval_instruct", "mbpp_instruct"]
+TASK_LIMITS = {"mmlu_pro": 2000}     # tasks not listed -> full dataset
 EVAL_MAX_LEN = 16384
-MAX_GEN_TOKS = 2048           # generous cap; tasks still stop on their own `until`
+MAX_GEN_TOKS = 4096                   # room for chain-of-thought / thinking
+UNTIL = '["<|im_end|>"]'             # replace lm-eval's premature "\n\n" stop
 SEED = 1234
 
 
@@ -54,18 +57,17 @@ def model_args(arm):
     ])
 
 
-def build_cmd(arm, tasks, out_path, cache_path, limit=None):
+def build_cmd(arm, task, out_path, cache_path, limit):
     cmd = [sys.executable, "-m", "lm_eval", "--model", "vllm",
            "--model_args", model_args(arm),
-           "--tasks", ",".join(tasks),
+           "--tasks", task,
            "--apply_chat_template", "--fewshot_as_multiturn",
            "--batch_size", "auto",
-           "--gen_kwargs", f"temperature=0.0,max_gen_toks={MAX_GEN_TOKS}",
+           "--gen_kwargs", f"temperature=0.0,max_gen_toks={MAX_GEN_TOKS},until={UNTIL}",
            "--seed", str(SEED),
            "--output_path", str(out_path),
            "--use_cache", str(cache_path),
-           "--confirm_run_unsafe_code",
-           "--trust_remote_code"]
+           "--confirm_run_unsafe_code", "--trust_remote_code"]
     if limit:
         cmd += ["--limit", str(limit)]
     return cmd
@@ -85,7 +87,7 @@ def main():
     ap.add_argument("--tasks", default=",".join(GEN_TASKS))
     ap.add_argument("--only", nargs="*", default=None)
     ap.add_argument("--order", default=None)
-    ap.add_argument("--limit", type=int, default=None)
+    ap.add_argument("--limit", type=int, default=None, help="override ALL task caps (debug)")
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
 
@@ -104,34 +106,48 @@ def main():
     os.environ.setdefault("HF_ALLOW_CODE_EVAL", "1")
     os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
 
-    print(f"[{ts()}] {len(arms)} arms x {len(tasks)} tasks (generative); out={out_dir}", flush=True)
+    print(f"[{ts()}] {len(arms)} arms x {len(tasks)} tasks (generative, per-task); out={out_dir}", flush=True)
     summary = []
     for i, arm in enumerate(arms, 1):
-        done = out_dir / f"{arm['id']}.done"
-        if done.exists():
-            print(f"[{ts()}] ({i}/{len(arms)}) SKIP {arm['id']} (done)", flush=True)
+        arm_done = out_dir / f"{arm['id']}.done"
+        if arm_done.exists():
+            print(f"[{ts()}] ({i}/{len(arms)}) SKIP {arm['id']} (all tasks done)", flush=True)
             summary.append((arm["id"], "skipped")); continue
-        gout = out_dir / arm["id"]
-        cmd = build_cmd(arm, tasks, gout, cache_dir / arm["id"], args.limit)
-        log_path = logs_dir / f"quality_{arm['id']}.log"
-        print(f"[{ts()}] ({i}/{len(arms)}) RUN  {arm['id']}  ({arm['repo']})", flush=True)
+        merged, ok = {}, []
+        for task in tasks:
+            limit = args.limit if args.limit is not None else TASK_LIMITS.get(task)
+            tdone = out_dir / f"{arm['id']}__{task}.done"
+            tjson = out_dir / f"{arm['id']}__{task}.json"
+            if tdone.exists() and tjson.exists():
+                merged.update(json.load(open(tjson)).get("results", {})); ok.append(task); continue
+            tout = out_dir / f"{arm['id']}__{task}"
+            cmd = build_cmd(arm, task, tout, cache_dir / f"{arm['id']}_{task}", limit)
+            log_path = logs_dir / f"quality_{arm['id']}_{task}.log"
+            print(f"[{ts()}] ({i}/{len(arms)}) RUN {arm['id']} :: {task}"
+                  + (f" (n={limit})" if limit else " (full)"), flush=True)
+            if args.dry_run:
+                print("    " + " ".join(cmd)); continue
+            t0 = time.time()
+            with open(log_path, "a") as lf:
+                lf.write(f"\n===== {arm['id']} {task} @ {ts()} =====\n{' '.join(cmd)}\n\n"); lf.flush()
+                rc = subprocess.call(cmd, stdout=lf, stderr=subprocess.STDOUT)
+            if rc == 0 and (rj := find_results_json(tout)):
+                shutil.copy(rj, tjson)
+                merged.update(json.load(open(rj)).get("results", {}))
+                tdone.write_text(ts()); ok.append(task)
+                print(f"[{ts()}]   ok  {arm['id']} :: {task}  {(time.time()-t0)/60:.1f}m", flush=True)
+            else:
+                print(f"[{ts()}]   FAIL {arm['id']} :: {task} rc={rc} (see {log_path})", flush=True)
         if args.dry_run:
-            print("    " + " ".join(cmd)); continue
-        t0 = time.time()
-        with open(log_path, "a") as lf:
-            lf.write(f"\n===== {arm['id']} @ {ts()} =====\n{' '.join(cmd)}\n\n"); lf.flush()
-            rc = subprocess.call(cmd, stdout=lf, stderr=subprocess.STDOUT)
-        dt = (time.time() - t0) / 60
-        if rc == 0 and (rj := find_results_json(gout)):
-            data = json.load(open(rj))
-            shutil.copy(rj, out_dir / f"{arm['id']}.json")
-            done.write_text(ts())
-            got = sorted(data.get("results", {}).keys())
-            print(f"[{ts()}]   OK   {arm['id']} {dt:.1f}m  tasks={got}", flush=True)
-            summary.append((arm["id"], f"OK {dt:.0f}m"))
+            continue
+        if merged:
+            (out_dir / f"{arm['id']}.json").write_text(json.dumps(
+                {"arm": arm["id"], "repo": arm["repo"], "revision": arm["revision"],
+                 "results": merged}, indent=1))
+        if len(ok) == len(tasks):
+            arm_done.write_text(ts()); summary.append((arm["id"], f"OK ({len(ok)} tasks)"))
         else:
-            print(f"[{ts()}]   FAIL {arm['id']} rc={rc} (see {log_path})", flush=True)
-            summary.append((arm["id"], f"FAIL rc={rc}"))
+            summary.append((arm["id"], f"partial {len(ok)}/{len(tasks)}"))
 
     print(f"\n[{ts()}] DONE.", flush=True)
     for aid, st in summary:

@@ -18,8 +18,8 @@ TASK_METRIC = {
     "gsm8k":                     ["exact_match,flexible-extract", "exact_match,strict-match", "exact_match,none"],
     "aime25":                    ["exact_match,none", "acc,none", "exact_match,flexible-extract"],
     "ifeval":                    ["prompt_level_strict_acc,none", "inst_level_strict_acc,none"],
-    "humaneval":                 ["pass@1,none", "pass@1,create_test", "pass@1"],
-    "mbpp":                      ["pass@1,none", "pass@1"],
+    "humaneval_instruct":        ["pass@1,none", "pass@1,create_test", "pass@1"],
+    "mbpp_instruct":             ["pass@1,none", "pass@1"],
 }
 TASKS = list(TASK_METRIC)
 
