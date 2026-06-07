@@ -93,10 +93,19 @@ how these reasoning/agentic models are actually used, (b) matches the protocol N
 uses for its published numbers — enabling direct cross-validation, and (c) produced
 sane results on the same hardware (NVFP4 `gsm8k` = **0.97**).
 
-Suite (reasoning · instruction-following · coding): `mmlu_pro`, `gpqa_diamond`,
-`gsm8k`, `aime25`, `ifeval`, `humaneval`, `mbpp`. Identical protocol across all 16
-arms; fixed seed 1234; each model in its native chat behaviour. Comparing an arm to
-its same-model BF16 reference isolates the quantization-induced quality delta.
+Suite (knowledge · math · instruction-following · coding): `mmlu_pro` (capped at
+2000 items for tractability), `gsm8k`, `ifeval`, `humaneval_instruct`,
+`mbpp_instruct`. Two engineering fixes were required for correct chat-model scoring
+and ship with the harness: (i) lm-eval's default generation stop (`"\n\n"`)
+prematurely truncates chat models — Qwen emitted a one-line preamble and halted
+(gsm8k 0.0); stopping on the chat turn-end/EOS instead restores it (gsm8k 0.0 → 1.0);
+(ii) coding uses the `*_instruct` task variants, which extract code from chat/markdown
+output. `gpqa_diamond` is held out (its dataset is HF-gated) and `aime25` was dropped
+(greedy single-pass sits at the floor — 0/15 in validation — giving no degradation
+signal). Each task is a resumable per-arm job; identical protocol across all 16 arms;
+fixed seed 1234; each model in its native chat behaviour (Qwen reasons in `<think>`
+blocks, Gemma answers directly). Comparing an arm to its same-model BF16 reference
+isolates the quantization-induced quality delta.
 (`scripts/run_quality.py`)
 
 ### 3.5 Throughput protocol — single-stream, the low-TTFT regime

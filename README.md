@@ -45,12 +45,15 @@ Optimizer releases.**
 versus prompt length, decode tokens/s, end-to-end latency, and the real
 weight/KV-cache footprint reported by vLLM. (`scripts/run_throughput.py`)
 
-**Quality — lm-evaluation-harness.** Nine tasks spanning knowledge, reasoning,
-instruction-following and coding: `mmlu`, `gsm8k`, `arc_challenge`, `hellaswag`,
-`ifeval`, `gpqa_diamond`, `mmlu_pro`, `humaneval`, `mbpp`. Greedy decoding (temp 0)
-for reproducibility; each model's chat template applied; identical protocol across
-all 16 arms. Quality runs use vLLM's internal batching (loglikelihood/greedy scores
-are batch-size-invariant — batching changes speed, not results). (`scripts/run_quality.py`)
+**Quality — lm-evaluation-harness, generative.** Five tasks spanning knowledge, math,
+instruction-following and coding: `mmlu_pro` (n≤2000), `gsm8k`, `ifeval`,
+`humaneval_instruct`, `mbpp_instruct`. We evaluate **generatively** with each model's
+chat template and greedy decoding — loglikelihood multiple-choice scoring proved
+unreliable for these instruct models (the BF16 reference scored 0.42 on ARC-Challenge
+vs a true ~0.88), while generative matches how they are actually used and how NVIDIA
+reports. Each (arm, task) is a resumable job; the harness fixes lm-eval's premature
+chat-model stop and uses `*_instruct` coding tasks. `gpqa_diamond` is held out
+(HF-gated dataset). (`scripts/run_quality.py`)
 
 **Cross-validation.** For the three official NVIDIA NVFP4 arms we reproduce the
 BF16→NVFP4 deltas NVIDIA publishes (GPQA-Diamond, MMLU-Pro, AIME-2025) as a

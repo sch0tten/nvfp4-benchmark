@@ -25,7 +25,9 @@ import yaml
 
 # gpqa_diamond_cot_zeroshot omitted by default (its dataset Idavidrein/gpqa is
 # HF-gated); add via --tasks once access is granted.
-GEN_TASKS = ["mmlu_pro", "gsm8k", "aime25", "ifeval", "humaneval_instruct", "mbpp_instruct"]
+# aime25 dropped: at greedy single-pass it sits at the floor (0/15 in validation)
+# and overflows the thinking budget, giving no quantization-degradation signal.
+GEN_TASKS = ["mmlu_pro", "gsm8k", "ifeval", "humaneval_instruct", "mbpp_instruct"]
 TASK_LIMITS = {"mmlu_pro": 2000}     # tasks not listed -> full dataset
 EVAL_MAX_LEN = 16384
 MAX_GEN_TOKS = 4096                   # room for chain-of-thought / thinking

@@ -15,8 +15,7 @@ import yaml
 TASK_METRIC = {
     "mmlu_pro":                  ["exact_match,custom-extract", "exact_match,none", "acc,none"],
     "gpqa_diamond_cot_zeroshot": ["exact_match,flexible-extract", "exact_match,none", "acc,none"],
-    "gsm8k":                     ["exact_match,flexible-extract", "exact_match,strict-match", "exact_match,none"],
-    "aime25":                    ["exact_match,none", "acc,none", "exact_match,flexible-extract"],
+    "gsm8k":                     ["exact_match,strict-match", "exact_match,flexible-extract", "exact_match,none"],
     "ifeval":                    ["prompt_level_strict_acc,none", "inst_level_strict_acc,none"],
     "humaneval_instruct":        ["pass@1,none", "pass@1,create_test", "pass@1"],
     "mbpp_instruct":             ["pass@1,none", "pass@1"],
@@ -44,26 +43,26 @@ def arm_id_from_results(path, cfg_arms):
 
 
 def load_quality(qdir, cfg_arms):
+    """Incremental: prefer the merged <arm>.json; otherwise merge whatever
+    per-task <arm>__<task>.json files exist (so partial runs still analyze)."""
     out = {}
-    for p in sorted(glob.glob(os.path.join(qdir, "*.json"))):
-        aid = pathlib.Path(p).stem
-        if aid not in cfg_arms:
+    for aid in cfg_arms:
+        merged = {}
+        p = os.path.join(qdir, f"{aid}.json")
+        if os.path.exists(p):
+            try:
+                merged = json.load(open(p)).get("results", {})
+            except Exception:
+                merged = {}
+        if not merged:
+            for tp in sorted(glob.glob(os.path.join(qdir, f"{aid}__*.json"))):
+                try:
+                    merged.update(json.load(open(tp)).get("results", {}))
+                except Exception:
+                    pass
+        if not merged:
             continue
-        try:
-            data = json.load(open(p))
-        except Exception:
-            continue
-        res = data.get("results", {})
-        row = {}
-        for task in TASKS:
-            # task may appear directly or as a group aggregate
-            tr = res.get(task)
-            if tr is None:
-                # mmlu/mmlu_pro sometimes keyed with subtask aggregation
-                cand = {k: v for k, v in res.items() if k == task}
-                tr = cand.get(task)
-            if tr:
-                row[task] = pick_metric(tr, task)
+        row = {task: pick_metric(merged[task], task) for task in TASKS if merged.get(task)}
         out[aid] = row
     return out
 
