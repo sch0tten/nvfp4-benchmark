@@ -110,15 +110,18 @@ isolates the quantization-induced quality delta.
 
 ### 3.5 Throughput protocol — single-stream, the low-TTFT regime
 Every arm served at `--max-num-seqs 1`, `--max-model-len 65536`. We report, with
-warmup and repeats (median ± stdev): time-to-first-token (TTFT) vs prompt length,
-decode tokens/s, end-to-end latency, and vLLM's reported model-weight and KV-cache
-footprint. Prefill and decode are separated by a two-point method (latency at 1 vs
-257 output tokens). (`scripts/run_throughput.py`)
+warmup and repeats (median over 3): time-to-first-token (TTFT) vs prompt length
+(128→32k), decode tokens/s, end-to-end latency, and the on-disk weight footprint —
+the practical "does it fit in 96 GB alongside a 64k KV-cache" number. Prefill and
+decode are separated by a two-point method (latency at 1 vs 257 output tokens).
+(`scripts/run_throughput.py`)
 
 ### 3.6 Cross-validation
-For the three official NVIDIA NVFP4 arms we reproduce the BF16→NVFP4 deltas NVIDIA
-publishes (GPQA-Diamond, MMLU-Pro, AIME-2025) under a consistent local protocol, and
-report the agreement margin as a harness-credibility anchor.
+For the official NVIDIA NVFP4 arms we compare our measured BF16→NVFP4 deltas to the
+benchmarks NVIDIA publishes that overlap our suite — chiefly **MMLU-Pro** (and
+**IFEval** for the Gemma MoE). Absolute scores differ by protocol; the credibility
+anchor is whether the *direction and magnitude of the quantization delta* agree.
+(`scripts/cross_validate.py`)
 
 ### 3.7 Reproducibility
 `scripts/download_models.sh` fetches every arm by pinned SHA (no reliance on any
