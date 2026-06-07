@@ -19,6 +19,12 @@ publishable report for **URE.us**.
   a second `~/llms/qwen3.6-27B/.venv-vllm022` (vLLM 0.22.x) also exists.
 - Workspace on ai02: `~/bench-nvfp4/` (scripts, logs, results). Shared HF cache:
   `~/.cache/huggingface` (already holds `Qwen/Qwen3.6-27B-FP8`, 29 GB).
+- **CUDA_HOME gotcha (important):** ai02 has the driver/runtime but NO system CUDA
+  toolkit, so FlashInfer's JIT of the SM120 NVFP4 cutlass GEMM fails with "Could not
+  find nvcc". Fix (keeps cudagraphs — do NOT use enforce_eager): point `CUDA_HOME` at
+  the pip-bundled toolkit in the venv: `.../.venv-vllm022/.../nvidia/cu13` (has nvcc
+  13.3 + include/lib/nvvm). All run scripts `source ~/bench-nvfp4/cuda_env.sh` first.
+  First NVFP4 load JIT-compiles the kernel (~1-3 min, then cached in ~/.cache/flashinfer).
 
 ## SECRETS OVERRIDE — explicit user instruction, 2026-06-07
 Per a direct user instruction, **this project's Hugging Face read token is stored in

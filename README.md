@@ -65,6 +65,10 @@ HF_TOKEN=hf_xxx bash scripts/download_models.sh
 # 2. Environment (Blackwell GPU): vLLM 0.22.1 + lm-eval
 python -m venv .venv && . .venv/bin/activate
 pip install -r env/requirements.lock.txt        # or: pip install vllm==0.22.1 lm-eval
+# NVFP4 needs nvcc for FlashInfer's SM120 cutlass JIT. If you have no system CUDA
+# toolkit, point CUDA_HOME at the pip-bundled one so cudagraphs stay enabled:
+export CUDA_HOME="$(python -c 'import os,nvidia;print(os.path.dirname(nvidia.__file__))')/cu13"
+export PATH="$CUDA_HOME/bin:$PATH"; export LD_LIBRARY_PATH="$CUDA_HOME/lib:$LD_LIBRARY_PATH"
 
 # 3. Quality matrix (resumable; ~all 16 arms x 9 tasks)
 HF_ALLOW_CODE_EVAL=1 python scripts/run_quality.py --config configs/models.yaml

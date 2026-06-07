@@ -26,7 +26,7 @@ SEED = 1234
 
 
 def ts():
-    return datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
+    return datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
 def load_arms(config_path):
