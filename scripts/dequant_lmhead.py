@@ -3,9 +3,14 @@ from safetensors.torch import load_file, save_file
 from safetensors import safe_open
 from vllm.model_executor.layers.quantization.utils.nvfp4_emulation_utils import dequantize_to_dtype
 
-SWIZZLE = (sys.argv[1].lower()=="true") if len(sys.argv)>1 else True
-SRC = glob.glob("/home/stefan0/.cache/huggingface/hub/models--nvidia--Qwen3.6-35B-A3B-NVFP4/snapshots/*")[0]
-DST = "/home/stefan0/bench-nvfp4/models/qwen3_6_35b_a3b__nvfp4_bf16head"
+# NVIDIA's modelopt NVFP4 stores block-scales linear (un-swizzled), so swizzle=False is correct.
+SWIZZLE = (sys.argv[1].lower()=="true") if len(sys.argv)>1 else False
+_hub = os.path.join(os.environ.get("HF_HOME", os.path.expanduser("~/.cache/huggingface")), "hub")
+_snaps = sorted(glob.glob(os.path.join(_hub, "models--nvidia--Qwen3.6-35B-A3B-NVFP4", "snapshots", "*")))
+assert _snaps, f"download nvidia/Qwen3.6-35B-A3B-NVFP4 first (none found under {_hub})"
+SRC = _snaps[-1]
+DST = os.environ.get("ARM12_CKPT",
+        os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "models", "qwen3_6_35b_a3b__nvfp4_bf16head"))
 SHARD = "model-00003-of-00003.safetensors"
 os.makedirs(DST, exist_ok=True)
 print("SRC", SRC, "\nSWIZZLE", SWIZZLE)

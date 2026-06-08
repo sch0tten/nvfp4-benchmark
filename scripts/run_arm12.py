@@ -3,11 +3,11 @@
 # replicating run_quality.py's EXACT protocol. Resumable; standard output paths.
 import glob, json, os, pathlib, shutil, subprocess, sys, datetime, time
 ARM="qwen3_6_35b_a3b__nvfp4"
-PRETRAINED="/home/stefan0/bench-nvfp4/models/qwen3_6_35b_a3b__nvfp4_bf16head"
+PRETRAINED=os.environ.get("ARM12_CKPT", os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "models", "qwen3_6_35b_a3b__nvfp4_bf16head"))
 GEN_TASKS=["mmlu_pro","gsm8k","ifeval","humaneval_instruct","mbpp_instruct"]
 TASK_LIMITS={"mmlu_pro":50,"gsm8k":600}
 EVAL_MAX_LEN=16384; MAX_GEN_TOKS=4096; UNTIL='["<|im_end|>"]'; SEED=1234
-OUT=pathlib.Path("results/quality"); LOGS=pathlib.Path("logs"); CACHE=pathlib.Path("cache/lm_eval")
+OUT=pathlib.Path(os.environ.get("OUT_DIR","results/quality")); LOGS=pathlib.Path(os.environ.get("LOGS_DIR","logs")); CACHE=pathlib.Path(os.environ.get("CACHE_DIR","cache/lm_eval"))
 for p in (OUT,LOGS,CACHE): p.mkdir(parents=True,exist_ok=True)
 def ts(): return datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 def margs(): return ",".join([f"pretrained={PRETRAINED}",f"tokenizer={PRETRAINED}","dtype=auto",

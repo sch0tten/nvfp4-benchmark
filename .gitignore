@@ -2,6 +2,8 @@
 .env
 .env.*
 *.env
+# but DO track the template (it holds no secret):
+!.env.example
 
 # Python / venv
 __pycache__/
