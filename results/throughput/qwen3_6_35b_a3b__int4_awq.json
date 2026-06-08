@@ -1,0 +1,53 @@
+{
+  "id": "qwen3_6_35b_a3b__int4_awq",
+  "lengths": {
+    "128": {
+      "prompt_tokens": 128,
+      "ttft_s": 0.0745,
+      "ttft_s_stdev": 0.0005,
+      "decode_tok_s": 194.18,
+      "e2e_s_256out": 1.3929
+    },
+    "1024": {
+      "prompt_tokens": 1024,
+      "ttft_s": 0.0711,
+      "ttft_s_stdev": 0.0006,
+      "decode_tok_s": 194.27,
+      "e2e_s_256out": 1.3888
+    },
+    "4096": {
+      "prompt_tokens": 4096,
+      "ttft_s": 0.1483,
+      "ttft_s_stdev": 0.0026,
+      "decode_tok_s": 191.89,
+      "e2e_s_256out": 1.4824
+    },
+    "16384": {
+      "prompt_tokens": 16384,
+      "ttft_s": 0.6889,
+      "ttft_s_stdev": 0.0031,
+      "decode_tok_s": 186.72,
+      "e2e_s_256out": 2.0599
+    },
+    "32768": {
+      "prompt_tokens": 32768,
+      "ttft_s": 1.6069,
+      "ttft_s_stdev": 0.002,
+      "decode_tok_s": 177.36,
+      "e2e_s_256out": 3.0503
+    }
+  },
+  "repo": "QuantTrio/Qwen3.6-35B-A3B-AWQ",
+  "revision": "119886a1072372348f73ef0df2d801cdcc0f455b",
+  "family": "Qwen3.6-35B-A3B",
+  "type": "moe",
+  "format": "int4_awq",
+  "memory": {},
+  "config": {
+    "max_num_seqs": 1,
+    "max_model_len": 65536,
+    "gpu_memory_utilization": 0.9,
+    "decode_n": 256,
+    "repeats": 3
+  }
+}

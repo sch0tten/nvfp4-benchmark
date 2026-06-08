@@ -1,5 +1,11 @@
 # HANDOFF — resume the NVFP4 benchmark from a fresh session
 
+> **STATUS — COMPLETE (2026-06-08).** All 16 arms measured (quality + single-stream
+> throughput), cross-validated vs NVIDIA, written up in `paper/report.md` (Tables 1–5,
+> 3 figures). The qwen-MoE-NVFP4 arm was rescued by dequantizing its `lm_head` to BF16
+> (`scripts/dequant_lmhead.py` + `run_arm12.py`). AEON service restored on ai02. The guide
+> below is the historical resume record.
+
 **Read this + `CLAUDE.md` first.** The hard part (infra, validation, fixing every
 real issue) is DONE. What remains is mechanical: let the run finish, analyze, write.
 
@@ -34,16 +40,22 @@ One identical protocol for ALL 16 arms:
 ```bash
 # progress
 ssh stefan0@ai02 'cd ~/bench-nvfp4; grep -E "RUN |ok |FAIL" logs/run_quality_master.log | tail -8;
-  echo "arms done: $(ls results/quality/*.done 2>/dev/null | grep -vc __)/16  FAILs: $(grep -c FAIL logs/run_quality_master.log)"'
+  echo "arms done: $(ls results/quality/*.done 2>/dev/null | grep -vc '__.*__')/16  FAILs: $(grep -c FAIL logs/run_quality_master.log)"'
 # is it alive?
 ssh stefan0@ai02 'pgrep -af run_quality.py | head -1; nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader|head -1'
 # RESUME if it died (skips completed arms/tasks automatically):
 ssh stefan0@ai02 'cd ~/bench-nvfp4; setsid bash scripts/launch_quality.sh >> logs/run_quality_master.log 2>&1 < /dev/null &'
 ```
-**Watch-out:** arm `qwen3_6_35b_a3b__bf16` (72 GB MoE-BF16) has the fewest Mamba blocks.
-If it FAILs on "exceeds available Mamba cache blocks", lower max_num_seqs for it only:
-re-run `launch_quality.sh --only qwen3_6_35b_a3b__bf16` after editing `run_quality.py`
-model_args to `max_num_seqs=32` (or pass via a one-off). It's resumable.
+**MoE-arm libnvrtc gotcha (RESOLVED 2026-06-08):** the MoE arms (`qwen3_6_35b_a3b`,
+`gemma4_26b_a4b_it`) build FlashInfer's `fused_moe_120` sm120 kernel, whose final c++ link
+needs `-lnvrtc`. The cu13 toolkit dir had `libnvrtc.so.13` but no unversioned `libnvrtc.so`,
+and `cuda_env.sh` set only `LD_LIBRARY_PATH` (runtime) not `LIBRARY_PATH` (link-time) — so every
+MoE arm died at engine-init with `ninja: build stopped ... cannot find -lnvrtc` (NOT the
+Mamba-cache issue; dense arms were unaffected). Fixed: `ln -sf libnvrtc.so.13
+$CUDA_HOME/lib/libnvrtc.so` + `export LIBRARY_PATH="$CUDA_HOME/lib:..."` appended to
+`cuda_env.sh` (both persisted on ai02; the symlink is not in git — recreate on any venv
+reinstall). `seqs=64` confirmed fine for the 72 GB MoE-BF16 arm (cudagraphs captured). If a
+Mamba "exceeds available cache blocks" error ever appears later, lower `max_num_seqs` for that arm.
 
 ## Remaining steps (in order)
 1. **Finish quality** (monitor/resume as above until `results/quality/` has 16 `*.done`).

@@ -1,0 +1,53 @@
+{
+  "id": "qwen3_6_27b__int4_awq",
+  "lengths": {
+    "128": {
+      "prompt_tokens": 128,
+      "ttft_s": 0.0643,
+      "ttft_s_stdev": 0.0001,
+      "decode_tok_s": 69.02,
+      "e2e_s_256out": 3.7734
+    },
+    "1024": {
+      "prompt_tokens": 1024,
+      "ttft_s": 0.2311,
+      "ttft_s_stdev": 0.0009,
+      "decode_tok_s": 68.39,
+      "e2e_s_256out": 3.9744
+    },
+    "4096": {
+      "prompt_tokens": 4096,
+      "ttft_s": 0.9321,
+      "ttft_s_stdev": 0.0017,
+      "decode_tok_s": 67.48,
+      "e2e_s_256out": 4.7258
+    },
+    "16384": {
+      "prompt_tokens": 16384,
+      "ttft_s": 3.9695,
+      "ttft_s_stdev": 0.0071,
+      "decode_tok_s": 64.55,
+      "e2e_s_256out": 7.9357
+    },
+    "32768": {
+      "prompt_tokens": 32768,
+      "ttft_s": 8.4873,
+      "ttft_s_stdev": 0.0072,
+      "decode_tok_s": 61.69,
+      "e2e_s_256out": 12.6374
+    }
+  },
+  "repo": "QuantTrio/Qwen3.6-27B-AWQ",
+  "revision": "9b507bdc9afafb87b7898700cc2a591aa6639461",
+  "family": "Qwen3.6-27B",
+  "type": "dense",
+  "format": "int4_awq",
+  "memory": {},
+  "config": {
+    "max_num_seqs": 1,
+    "max_model_len": 65536,
+    "gpu_memory_utilization": 0.9,
+    "decode_n": 256,
+    "repeats": 3
+  }
+}

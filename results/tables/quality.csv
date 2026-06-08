@@ -1,0 +1,17 @@
+arm,family,type,format,size_gb,mmlu_pro,gsm8k,ifeval,humaneval_instruct,mbpp_instruct,avg,avg_delta_vs_bf16
+qwen3_6_27b__bf16,Qwen3.6-27B,dense,bf16,55.6,84.43,97.17,30.5,96.34,83.4,78.37,0.0
+qwen3_6_27b__fp8,Qwen3.6-27B,dense,fp8,30.9,84.0,98.17,30.5,97.56,83.8,78.81,0.44
+qwen3_6_27b__int4_awq,Qwen3.6-27B,dense,int4_awq,21.9,82.86,98.17,30.5,96.34,82.0,77.97,-0.39
+qwen3_6_27b__nvfp4,Qwen3.6-27B,dense,nvfp4,26.4,82.0,96.67,30.87,95.73,83.8,77.81,-0.55
+gemma4_31b_it__bf16,Gemma-4-31B-it,dense,bf16,62.6,86.0,96.67,91.31,93.29,70.4,87.53,0.0
+gemma4_31b_it__fp8,Gemma-4-31B-it,dense,fp8,33.3,85.29,96.67,91.13,90.85,71.4,87.07,-0.47
+gemma4_31b_it__int4_awq,Gemma-4-31B-it,dense,int4_awq,20.5,85.0,96.33,90.02,92.07,70.0,86.68,-0.85
+gemma4_31b_it__nvfp4,Gemma-4-31B-it,dense,nvfp4,32.7,84.43,96.5,90.57,93.29,69.8,86.92,-0.62
+qwen3_6_35b_a3b__bf16,Qwen3.6-35B-A3B,moe,bf16,71.9,83.14,95.0,30.13,96.95,80.4,77.12,0.0
+qwen3_6_35b_a3b__fp8,Qwen3.6-35B-A3B,moe,fp8,37.5,83.0,96.0,30.87,96.34,79.0,77.04,-0.08
+qwen3_6_35b_a3b__int4_awq,Qwen3.6-35B-A3B,moe,int4_awq,25.5,83.0,96.33,30.68,95.73,80.8,77.31,0.19
+qwen3_6_35b_a3b__nvfp4,Qwen3.6-35B-A3B,moe,nvfp4,23.5,82.57,96.67,30.5,93.9,79.4,76.61,-0.52
+gemma4_26b_a4b_it__bf16,Gemma-4-26B-A4B-it,moe,bf16,51.6,82.71,95.17,89.46,10.37,25.4,60.62,0.0
+gemma4_26b_a4b_it__fp8,Gemma-4-26B-A4B-it,moe,fp8,28.7,82.57,95.0,88.91,14.02,21.0,60.3,-0.32
+gemma4_26b_a4b_it__int4_awq,Gemma-4-26B-A4B-it,moe,int4_awq,17.2,82.14,95.33,87.62,10.98,17.6,58.73,-1.89
+gemma4_26b_a4b_it__nvfp4,Gemma-4-26B-A4B-it,moe,nvfp4,18.8,82.86,96.33,89.83,13.41,27.2,61.93,1.31

@@ -2,7 +2,7 @@
 
 ## What this is
 A scientific-grade benchmark comparing quantization formats — **BF16/FP16, FP8, INT4
-(AWQ/GPTQ), and NVFP4** — on two **dense** "local-agentic" models:
+(AWQ), and NVFP4** — on two **dense** "local-agentic" models:
 - **Qwen3.6-27B** (`Qwen/Qwen3.6-27B`, Alibaba, released 2026-04-22)
 - **Gemma-4-31B-it** (`google/gemma-4-31B-it`, Google, April 2026)
 

@@ -1,0 +1,151 @@
+{
+ "arm": "gemma4_31b_it__nvfp4",
+ "repo": "nvidia/Gemma-4-31B-IT-NVFP4",
+ "revision": "e5ef03afa233c35cb000323ff098d4291e1dd07c",
+ "results": {
+  "mmlu_pro_biology": {
+   "name": "mmlu_pro_biology",
+   "alias": "biology",
+   "sample_len": 50,
+   "exact_match,custom-extract": 0.96,
+   "exact_match_stderr,custom-extract": 0.02799416848895062
+  },
+  "mmlu_pro_business": {
+   "name": "mmlu_pro_business",
+   "alias": "business",
+   "sample_len": 50,
+   "exact_match,custom-extract": 0.84,
+   "exact_match_stderr,custom-extract": 0.052372293656638154
+  },
+  "mmlu_pro_chemistry": {
+   "name": "mmlu_pro_chemistry",
+   "alias": "chemistry",
+   "sample_len": 50,
+   "exact_match,custom-extract": 0.92,
+   "exact_match_stderr,custom-extract": 0.038756171332144394
+  },
+  "mmlu_pro_computer_science": {
+   "name": "mmlu_pro_computer_science",
+   "alias": "computer_science",
+   "sample_len": 50,
+   "exact_match,custom-extract": 0.86,
+   "exact_match_stderr,custom-extract": 0.0495695759225642
+  },
+  "mmlu_pro_economics": {
+   "name": "mmlu_pro_economics",
+   "alias": "economics",
+   "sample_len": 50,
+   "exact_match,custom-extract": 0.88,
+   "exact_match_stderr,custom-extract": 0.04642307659791979
+  },
+  "mmlu_pro_engineering": {
+   "name": "mmlu_pro_engineering",
+   "alias": "engineering",
+   "sample_len": 50,
+   "exact_match,custom-extract": 0.82,
+   "exact_match_stderr,custom-extract": 0.05488392203513869
+  },
+  "mmlu_pro_health": {
+   "name": "mmlu_pro_health",
+   "alias": "health",
+   "sample_len": 50,
+   "exact_match,custom-extract": 0.72,
+   "exact_match_stderr,custom-extract": 0.06414269805898185
+  },
+  "mmlu_pro_history": {
+   "name": "mmlu_pro_history",
+   "alias": "history",
+   "sample_len": 50,
+   "exact_match,custom-extract": 0.72,
+   "exact_match_stderr,custom-extract": 0.06414269805898185
+  },
+  "mmlu_pro_law": {
+   "name": "mmlu_pro_law",
+   "alias": "law",
+   "sample_len": 50,
+   "exact_match,custom-extract": 0.8,
+   "exact_match_stderr,custom-extract": 0.05714285714285715
+  },
+  "mmlu_pro_math": {
+   "name": "mmlu_pro_math",
+   "alias": "math",
+   "sample_len": 50,
+   "exact_match,custom-extract": 0.96,
+   "exact_match_stderr,custom-extract": 0.027994168488950623
+  },
+  "mmlu_pro_other": {
+   "name": "mmlu_pro_other",
+   "alias": "other",
+   "sample_len": 50,
+   "exact_match,custom-extract": 0.72,
+   "exact_match_stderr,custom-extract": 0.06414269805898186
+  },
+  "mmlu_pro_philosophy": {
+   "name": "mmlu_pro_philosophy",
+   "alias": "philosophy",
+   "sample_len": 50,
+   "exact_match,custom-extract": 0.84,
+   "exact_match_stderr,custom-extract": 0.05237229365663815
+  },
+  "mmlu_pro_physics": {
+   "name": "mmlu_pro_physics",
+   "alias": "physics",
+   "sample_len": 50,
+   "exact_match,custom-extract": 0.94,
+   "exact_match_stderr,custom-extract": 0.033926691677251195
+  },
+  "mmlu_pro_psychology": {
+   "name": "mmlu_pro_psychology",
+   "alias": "psychology",
+   "sample_len": 50,
+   "exact_match,custom-extract": 0.84,
+   "exact_match_stderr,custom-extract": 0.052372293656638154
+  },
+  "mmlu_pro": {
+   "alias": "mmlu_pro",
+   "name": "mmlu_pro",
+   "sample_len": 700,
+   "exact_match,custom-extract": 0.8442857142857143,
+   "exact_match_stderr,custom-extract": 0.013492558919237221,
+   "sample_count": {
+    "exact_match,custom-extract": 700
+   }
+  },
+  "gsm8k": {
+   "name": "gsm8k",
+   "alias": "gsm8k",
+   "sample_len": 600,
+   "exact_match,strict-match": 0.965,
+   "exact_match_stderr,strict-match": 0.007509037404214809,
+   "exact_match,flexible-extract": 0.9666666666666667,
+   "exact_match_stderr,flexible-extract": 0.007334395633079899
+  },
+  "ifeval": {
+   "name": "ifeval",
+   "alias": "ifeval",
+   "sample_len": 541,
+   "prompt_level_strict_acc,none": 0.9057301293900185,
+   "prompt_level_strict_acc_stderr,none": 0.012574449557583826,
+   "inst_level_strict_acc,none": 0.934052757793765,
+   "inst_level_strict_acc_stderr,none": "N/A",
+   "prompt_level_loose_acc,none": 0.9242144177449169,
+   "prompt_level_loose_acc_stderr,none": 0.011388926377499912,
+   "inst_level_loose_acc,none": 0.9496402877697842,
+   "inst_level_loose_acc_stderr,none": "N/A"
+  },
+  "humaneval_instruct": {
+   "name": "humaneval_instruct",
+   "alias": "humaneval_instruct",
+   "sample_len": 164,
+   "pass@1,create_test": 0.9329268292682927,
+   "pass@1_stderr,create_test": 0.01959315651462939
+  },
+  "mbpp_instruct": {
+   "name": "mbpp_instruct",
+   "alias": "mbpp_instruct",
+   "sample_len": 500,
+   "pass_at_1,extract_code": 0.698,
+   "pass_at_1_stderr,extract_code": 0.02055326917420919
+  }
+ }
+}

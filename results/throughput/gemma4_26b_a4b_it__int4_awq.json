@@ -1,0 +1,53 @@
+{
+  "id": "gemma4_26b_a4b_it__int4_awq",
+  "lengths": {
+    "128": {
+      "prompt_tokens": 128,
+      "ttft_s": 0.0278,
+      "ttft_s_stdev": 0.001,
+      "decode_tok_s": 222.0,
+      "e2e_s_256out": 1.181
+    },
+    "1024": {
+      "prompt_tokens": 1024,
+      "ttft_s": 0.0283,
+      "ttft_s_stdev": 0.0002,
+      "decode_tok_s": 214.32,
+      "e2e_s_256out": 1.2228
+    },
+    "4096": {
+      "prompt_tokens": 4096,
+      "ttft_s": 0.0318,
+      "ttft_s_stdev": 0.0012,
+      "decode_tok_s": 199.86,
+      "e2e_s_256out": 1.3127
+    },
+    "16384": {
+      "prompt_tokens": 16384,
+      "ttft_s": 0.0474,
+      "ttft_s_stdev": 0.0003,
+      "decode_tok_s": 167.86,
+      "e2e_s_256out": 1.5725
+    },
+    "32768": {
+      "prompt_tokens": 32768,
+      "ttft_s": 0.075,
+      "ttft_s_stdev": 0.0042,
+      "decode_tok_s": 143.23,
+      "e2e_s_256out": 1.8623
+    }
+  },
+  "repo": "cyankiwi/gemma-4-26B-A4B-it-AWQ-4bit",
+  "revision": "4033b16200f4152e55e100ea12dc388c537df622",
+  "family": "Gemma-4-26B-A4B-it",
+  "type": "moe",
+  "format": "int4_awq",
+  "memory": {},
+  "config": {
+    "max_num_seqs": 1,
+    "max_model_len": 65536,
+    "gpu_memory_utilization": 0.9,
+    "decode_n": 256,
+    "repeats": 3
+  }
+}

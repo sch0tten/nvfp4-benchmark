@@ -14,11 +14,12 @@ import yaml
 # "<metric>,<filter>" keys, e.g. "acc,none").
 TASK_METRIC = {
     "mmlu_pro":                  ["exact_match,custom-extract", "exact_match,none", "acc,none"],
-    "gpqa_diamond_cot_zeroshot": ["exact_match,flexible-extract", "exact_match,none", "acc,none"],
     "gsm8k":                     ["exact_match,strict-match", "exact_match,flexible-extract", "exact_match,none"],
     "ifeval":                    ["prompt_level_strict_acc,none", "inst_level_strict_acc,none"],
-    "humaneval_instruct":        ["pass@1,none", "pass@1,create_test", "pass@1"],
-    "mbpp_instruct":             ["pass@1,none", "pass@1"],
+    # lm-eval is inconsistent across the two coding tasks: humaneval reports
+    # "pass@1,..." (at-sign) while mbpp reports "pass_at_1,..." (underscores).
+    "humaneval_instruct":        ["pass@1,create_test", "pass@1,none", "pass_at_1,create_test", "pass_at_1,extract_code", "pass@1", "pass_at_1"],
+    "mbpp_instruct":             ["pass_at_1,extract_code", "pass_at_1,none", "pass@1,none", "pass_at_1", "pass@1"],
 }
 TASKS = list(TASK_METRIC)
 
@@ -31,7 +32,7 @@ def pick_metric(task_results, task):
     # fallback: first acc/exact/pass metric that is numeric and not stderr
     for k, v in task_results.items():
         if isinstance(v, (int, float)) and "stderr" not in k and any(
-                m in k for m in ("acc", "exact_match", "pass@")):
+                m in k for m in ("acc", "exact_match", "pass@", "pass_at")):
             return float(v) * (100 if v <= 1.0 else 1)
     return None
 

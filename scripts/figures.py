@@ -62,15 +62,18 @@ def main():
             vals = []
             for fam in families:
                 row = next((r for r in Q if r["family"] == fam and r["format"] == fmt), None)
-                vals.append(fnum(row["avg_delta_vs_bf16"]) if row else None)
+                bf = next((r for r in Q if r["family"] == fam and r["format"] == "bf16"), None)
+                rv = fnum(row.get("mmlu_pro")) if row else None
+                bv = fnum(bf.get("mmlu_pro")) if bf else None
+                vals.append(round(rv - bv, 2) if (rv is not None and bv is not None) else None)
             xs = [j + (i - 1.5) * w for j in x]
             ax.bar([xx for xx, v in zip(xs, vals) if v is not None],
                    [v for v in vals if v is not None],
                    width=w, label=FORMAT_LABEL[fmt], color=FORMAT_COLOR[fmt])
         ax.axhline(0, color="k", lw=0.8)
         ax.set_xticks(list(x)); ax.set_xticklabels(families, rotation=15, ha="right")
-        ax.set_ylabel("Avg quality delta vs BF16 (pts)")
-        ax.set_title("Quality cost of quantization (higher = closer to BF16)")
+        ax.set_ylabel("MMLU-Pro delta vs BF16 (pts)")
+        ax.set_title("Knowledge cost of quantization (MMLU-Pro; higher = closer to BF16)")
         ax.legend(); fig.tight_layout(); fig.savefig(out / "fig1_quality_delta.png", dpi=150)
         plt.close(fig)
 
@@ -98,16 +101,16 @@ def main():
         fig, ax = plt.subplots(figsize=(8, 6))
         for r in Q:
             tr = next((t for t in T if t["arm"] == r["arm"]), None)
-            gb = fnum(tr["weights_gib"]) if tr else fnum(r.get("size_gb"))
-            avg = fnum(r.get("avg"))
+            gb = (fnum(tr["weights_gib"]) if tr else None) or fnum(r.get("size_gb"))
+            avg = fnum(r.get("mmlu_pro"))
             if gb is None or avg is None:
                 continue
             ax.scatter(gb, avg, color=FORMAT_COLOR.get(r["format"], "#999"),
                        marker="o" if r["type"] == "dense" else "^", s=60)
             ax.annotate(r["arm"].split("__")[0][:10], (gb, avg), fontsize=6, alpha=0.6)
         ax.set_xlabel("Model weight footprint (GiB)")
-        ax.set_ylabel("Average task quality")
-        ax.set_title("Quality vs memory (○ dense, △ MoE)")
+        ax.set_ylabel("MMLU-Pro (%)")
+        ax.set_title("MMLU-Pro vs memory footprint (○ dense, △ MoE)")
         handles = [plt.Line2D([], [], marker="o", ls="", color=FORMAT_COLOR[f], label=FORMAT_LABEL[f])
                    for f in FORMAT_ORDER]
         ax.legend(handles=handles); fig.tight_layout()

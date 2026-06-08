@@ -28,11 +28,13 @@ meta:
     gpu_memory_utilization: 0.90
   eval_protocol:
     harness: "EleutherAI lm-evaluation-harness (in-process vLLM backend)"
-    note: "Eval uses internal batching (max_num_seqs left at vLLM default) — loglikelihood/greedy scores are batch-size-invariant, so batching changes speed, not results. Throughput (above) is measured separately at max_num_seqs=1."
+    method: "GENERATIVE, chat-templated (--apply_chat_template --fewshot_as_multiturn), greedy (temperature=0); until=[\"<|im_end|>\"] override replaces lm-eval's premature newline stop; max_num_seqs=64 (wall-clock only, not scores); thinking stays ON (each model's default)."
+    note: "Loglikelihood multiple-choice scoring is unreliable for these instruct models (BF16 Gemma-4-31B ARC-25shot=0.42 vs true ~0.88), so evaluation is generative — matching how NVIDIA reports and enabling cross-validation."
     max_model_len: 16384
-    decoding: "greedy (temperature=0) for reproducibility"
-    chat_template: "applied (--apply_chat_template, --fewshot_as_multiturn); all four seeds are instruction-tuned chat models"
-    tasks: [mmlu, gsm8k, arc_challenge, hellaswag, ifeval, gpqa_diamond, mmlu_pro, humaneval, mbpp]
+    max_gen_toks: 4096
+    seed: 1234
+    tasks: [mmlu_pro, gsm8k, ifeval, humaneval_instruct, mbpp_instruct]   # gpqa_diamond held out (HF-gated); aime25 dropped (greedy floors)
+    limits: "mmlu_pro=50/subject (~700 items); gsm8k=600; ifeval/humaneval_instruct/mbpp_instruct=full"
 
 models:
 

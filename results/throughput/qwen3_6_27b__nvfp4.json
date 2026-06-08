@@ -1,0 +1,53 @@
+{
+  "id": "qwen3_6_27b__nvfp4",
+  "lengths": {
+    "128": {
+      "prompt_tokens": 128,
+      "ttft_s": 0.108,
+      "ttft_s_stdev": 0.0008,
+      "decode_tok_s": 55.55,
+      "e2e_s_256out": 4.7162
+    },
+    "1024": {
+      "prompt_tokens": 1024,
+      "ttft_s": 0.1212,
+      "ttft_s_stdev": 0.0009,
+      "decode_tok_s": 55.16,
+      "e2e_s_256out": 4.762
+    },
+    "4096": {
+      "prompt_tokens": 4096,
+      "ttft_s": 0.4236,
+      "ttft_s_stdev": 0.0008,
+      "decode_tok_s": 54.47,
+      "e2e_s_256out": 5.1237
+    },
+    "16384": {
+      "prompt_tokens": 16384,
+      "ttft_s": 1.9411,
+      "ttft_s_stdev": 0.003,
+      "decode_tok_s": 52.77,
+      "e2e_s_256out": 6.7925
+    },
+    "32768": {
+      "prompt_tokens": 32768,
+      "ttft_s": 4.3994,
+      "ttft_s_stdev": 0.0063,
+      "decode_tok_s": 51.02,
+      "e2e_s_256out": 9.4166
+    }
+  },
+  "repo": "unsloth/Qwen3.6-27B-NVFP4",
+  "revision": "890bdef7a42feba6d83b6e17a03315c694112f2a",
+  "family": "Qwen3.6-27B",
+  "type": "dense",
+  "format": "nvfp4",
+  "memory": {},
+  "config": {
+    "max_num_seqs": 1,
+    "max_model_len": 65536,
+    "gpu_memory_utilization": 0.9,
+    "decode_n": 256,
+    "repeats": 3
+  }
+}

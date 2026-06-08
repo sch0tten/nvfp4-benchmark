@@ -1,0 +1,53 @@
+{
+  "id": "gemma4_31b_it__int4_awq",
+  "lengths": {
+    "128": {
+      "prompt_tokens": 128,
+      "ttft_s": 0.0293,
+      "ttft_s_stdev": 0.0006,
+      "decode_tok_s": 63.85,
+      "e2e_s_256out": 4.0389
+    },
+    "1024": {
+      "prompt_tokens": 1024,
+      "ttft_s": 0.0304,
+      "ttft_s_stdev": 0.0001,
+      "decode_tok_s": 61.48,
+      "e2e_s_256out": 4.1941
+    },
+    "4096": {
+      "prompt_tokens": 4096,
+      "ttft_s": 0.0341,
+      "ttft_s_stdev": 0.0002,
+      "decode_tok_s": 58.92,
+      "e2e_s_256out": 4.3788
+    },
+    "16384": {
+      "prompt_tokens": 16384,
+      "ttft_s": 0.0579,
+      "ttft_s_stdev": 0.0002,
+      "decode_tok_s": 53.05,
+      "e2e_s_256out": 4.8831
+    },
+    "32768": {
+      "prompt_tokens": 32768,
+      "ttft_s": 0.0965,
+      "ttft_s_stdev": 0.0037,
+      "decode_tok_s": 47.76,
+      "e2e_s_256out": 5.4561
+    }
+  },
+  "repo": "QuantTrio/gemma-4-31B-it-AWQ",
+  "revision": "200d06ee83eb49a03c6e3120dbf7b09191eb1539",
+  "family": "Gemma-4-31B-it",
+  "type": "dense",
+  "format": "int4_awq",
+  "memory": {},
+  "config": {
+    "max_num_seqs": 1,
+    "max_model_len": 65536,
+    "gpu_memory_utilization": 0.9,
+    "decode_n": 256,
+    "repeats": 3
+  }
+}
