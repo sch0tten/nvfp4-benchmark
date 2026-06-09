@@ -11,6 +11,12 @@ of four quantization formats — **BF16, FP8, INT4 (AWQ), and NVFP4** — across
 
 The full write-up is in [`paper/`](paper/). This README is the operational guide.
 
+> **Peer-validation welcome.** This benchmark exists to be re-run, not just read. If you have a
+> Blackwell (sm_120) box, clone it and reproduce the matrix (`make all`, below); if you find a
+> number we got wrong, a model worth adding, or an engine worth trying, open an issue or a pull
+> request. Both independent runs are committed (`results/` and `results-rerun/`) so you can diff
+> against ours score for score.
+
 ## The matrix (16 arms)
 
 | Model | Type | BF16 | FP8 | INT4 (AWQ) | NVFP4 |

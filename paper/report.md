@@ -4,8 +4,10 @@
 BF16, across two dense and two Mixture-of-Experts models.*
 
 **Status:** Results complete — all 16 arms measured (quality + single-stream throughput);
-tables and figures are generated from `results/` by the committed scripts. No number appears
-in this report that is not backed by a committed run log or an explicitly cited source.
+tables and figures are generated from `results/` by the committed scripts. The entire pipeline
+is public and rebuildable end-to-end — **<https://github.com/sch0tten/nvfp4-benchmark>** (§3.7) —
+and we invite you to run it yourself. No number appears in this report that is not backed by a
+committed run log or an explicitly cited source.
 
 ---
 
@@ -150,10 +152,27 @@ benchmarks NVIDIA publishes that overlap our suite — chiefly **MMLU-Pro** (and
 anchor is whether the *direction and magnitude of the quantization delta* agree.
 (`scripts/cross_validate.py`)
 
-### 3.7 Reproducibility
-`scripts/download_models.sh` fetches every arm by pinned SHA (no reliance on any
-pre-existing cache); the engine is a single pinned lockfile; the runners are
-resumable and log the model SHA + harness version per run. Everything is in the repo.
+### 3.7 Reproducibility — clone it and run it yourself
+The entire study is public, self-contained, and MIT-licensed:
+**<https://github.com/sch0tten/nvfp4-benchmark>**. `scripts/download_models.sh` fetches every
+arm by pinned SHA (no reliance on any pre-existing cache); the engine is a single pinned lockfile
+(`env/requirements.lock.txt`); the runners are resumable and log the model SHA + harness version
+per run; **both independent runs are committed** (`results/` and `results-rerun/`, §4.2). On any
+Blackwell (sm_120) host, with a Hugging Face read token whose account has accepted Google's Gemma
+license, the whole matrix is four commands:
+
+```bash
+git clone https://github.com/sch0tten/nvfp4-benchmark && cd nvfp4-benchmark
+cp .env.example .env            # add your hf_… read token (Gemma license accepted)
+make models                     # all 16 arms, pinned by SHA (~600–700 GB)
+make env && make setup          # vLLM 0.22.1 venv + the one-time SM120 toolchain fix
+make all                        # quality + arm-12 rescue + throughput + tables & figures
+```
+
+We built this to be rebuilt. Anyone — sceptics most of all — can re-run the matrix, dispute a
+number, add a model, or swap the engine, and open an issue or a pull request with what they find:
+an independent benchmark is only worth the trust others can reconstruct, and this one is
+engineered for exactly that.
 
 ## 4. Results — quality ("reasoning creep")
 
@@ -418,7 +437,47 @@ We state these plainly so the numbers are read for exactly what they are.
    delta matches NVIDIA's published figure to 0.03 pts, so the effect is immaterial — but it is a
    deviation from the pure artifact and we name it.
 
-## 8. Conclusion
+## 8. What these benchmarks measure — and what comes next
+
+**A scope disclaimer, stated plainly.** Nothing in this study measures whether these models are
+*good* — useful, reliable, pleasant to actually work with. We measured one narrow thing: how a
+numeric format moves a model's score on the standardized academic suites (MMLU-Pro, GSM8K, IFEval,
+HumanEval, MBPP) the field has agreed to compare on. Those suites are, in our opinion, showing
+their age. Half of them sit at a ceiling here — GSM8K at 95–98%, the coding sets within
+run-to-run noise of their BF16 reference (§4) — so they no longer separate frontier-class models;
+they reward single-turn question-answering rather than the multi-step, tool-using behaviour a
+local *agent* actually performs; and a model can top all five and still fail the first real task
+you hand it. We run them because they are the common yardstick and because they let us
+cross-validate against NVIDIA (§4.1), not because we believe they capture practical capability.
+Read this report as exactly what it is: a measurement of *format-induced quality change*, not a
+verdict on which model to trust with real work.
+
+**And yet — the result that stopped us.** Hold that saturation complaint next to the absolute
+numbers. Our Gemma-4-31B-it scores **84.4 on MMLU-Pro at 4-bit NVFP4** (Table 2), and every Qwen
+and Gemma arm lands between 82 and 86 — with the smallest four-bit arms (the Gemma-MoE, **17–19 GB**)
+fitting a single 24 GB consumer card. On that *same* benchmark, GPT-4o — the strongest model in
+MMLU-Pro's own paper — scores **72.6** ([Wang et al., NeurIPS 2024](https://arxiv.org/abs/2406.01574)).
+A frontier model of that generation carried a training-compute bill in the tens of millions of
+dollars: Stanford's AI Index estimated GPT-4's at roughly **$78 million** (Epoch AI's amortized
+figure is ~$40M) ([Stanford HAI AI Index 2025](https://hai.stanford.edu/ai-index/2025-ai-index-report/research-and-development)).
+So a quantized model that runs on one GPU under a desk now sits **ten-plus points above** a system
+that cost tens of millions of dollars to train, on the very benchmark that system helped make a
+standard. The comparison crosses harnesses — different shot count, item subset and protocol — so
+read the exact margin as directional; but the gap is far larger than any protocol difference could
+close. *That* is the real headline of the four-bit era, and it is precisely why the academic suites
+feel outdated: the open, quantized, runs-on-your-own-hardware models have already caught the
+frontier on these tests.
+
+**What comes next.** The honest way to answer the question this study deliberately cannot —
+*which model is actually best for a local agent, and for local agentic coding?* — is to stop
+scoring trivia and start scoring work. Our next benchmarks move to agentic evaluation: **τ-bench**
+(Sierra's tool-use-and-policy benchmark, where a model must hold a multi-turn conversation and call
+tools correctly under explicit rules) and **SWE-bench** (resolve real GitHub issues against real
+repositories, graded by the projects' own test suites). Those measure what a local agent is
+actually hired to do. Same hardware, same four formats, same reproducible discipline — and we will
+publish the numbers nobody else does there, too.
+
+## 9. Conclusion
 
 The number nobody publishes is the *independent* one: how much a real, downloaded quantization
 actually costs on real hardware, measured by someone with no stake in the answer. For four-bit on
