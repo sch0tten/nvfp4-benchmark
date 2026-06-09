@@ -492,3 +492,30 @@ See `configs/models.yaml` (committed). Engine lockfile: `env/requirements.lock.t
 
 ## Appendix B — environment baseline
 See repository `CLAUDE.md` and `results/` raw logs.
+
+## Sources
+
+Every in-house metric traces to a committed run log under `results/`; the external numbers and
+tools this report leans on are below.
+
+- **NVIDIA published NVFP4 accuracy** (cross-validation, §4.1 / Table 4) — transcribed from the
+  official NVIDIA Model Optimizer model cards:
+  [Gemma-4-31B-IT-NVFP4](https://huggingface.co/nvidia/Gemma-4-31B-IT-NVFP4),
+  [Qwen3.6-35B-A3B-NVFP4](https://huggingface.co/nvidia/Qwen3.6-35B-A3B-NVFP4),
+  [Gemma-4-26B-A4B-NVFP4](https://huggingface.co/nvidia/Gemma-4-26B-A4B-NVFP4). The transcribed
+  `bf16`/`nvfp4` figures and modelopt versions are recorded per arm in `configs/models.yaml`.
+- **GPT-4o MMLU-Pro = 72.6** (§8) — Wang et al., *MMLU-Pro: A More Robust and Challenging
+  Multi-Task Language Understanding Benchmark*, NeurIPS 2024
+  ([arXiv:2406.01574](https://arxiv.org/abs/2406.01574)).
+- **GPT-4 training-compute cost ≈ $78 M** (§8) — Stanford HAI,
+  [2025 AI Index Report, R&D chapter](https://hai.stanford.edu/ai-index/2025-ai-index-report/research-and-development)
+  (Epoch AI's amortized-hardware estimate is ~$40 M).
+- **Evaluation harness** — EleutherAI
+  [lm-evaluation-harness](https://github.com/EleutherAI/lm-evaluation-harness), generative protocol;
+  task suite MMLU-Pro, GSM8K, IFEval, HumanEval, MBPP (task definitions as shipped by the harness).
+- **Engine** — [vLLM](https://github.com/vllm-project/vllm) 0.22.1 and
+  [FlashInfer](https://github.com/flashinfer-ai/flashinfer) 0.6.11 (the SM120 NVFP4 and fused-MoE
+  kernels); exact lockfile in `env/requirements.lock.txt`.
+- **Model artifacts** — every arm's Hugging Face repo and pinned commit SHA, with per-layer recipe
+  and 30-day download count, is listed in
+  [`configs/models.yaml`](https://github.com/sch0tten/nvfp4-benchmark/blob/main/configs/models.yaml).
