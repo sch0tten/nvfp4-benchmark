@@ -264,6 +264,30 @@ little lower, so the gap is in the absolute anchors, not a divergent trend. Inde
 made with no access to NVIDIA's harness, lands on NVIDIA's own deltas — which is exactly what a
 trustworthy quantization benchmark should do.
 
+### 4.2 Test-retest — how stable are these numbers?
+
+Every score above is a single run, so before reading anything into sub-point deltas we re-ran the
+*entire* matrix end-to-end — identical pinned weights, identical engine, a **fresh** generation
+cache — and compared it score for score (`reproducibility/test_retest.md`). Across all 80 (arm,
+task) scores the mean absolute drift is **0.35 points**, and the shape is exactly what greedy
+decoding on non-deterministic kernels predicts:
+
+- **GSM8K is essentially exact** (max drift 0.83) — the arithmetic chain converges to the same
+  final answer regardless of floating-point jitter.
+- **MMLU-Pro is the noisiest**, ≤1.7 points — comparable to its own ±1.3-point sampling stderr —
+  because cutlass/cudagraph reductions occasionally flip the arg-max on a borderline item.
+- **Coding swings up to ~3 points**: pass@1 is binary per problem, so a handful of flips moves
+  several points; the largest is the Gemma-MoE arm — the same degenerate-decoding task §4 already
+  sets aside.
+- **Throughput is far steadier** — every arm's single-stream decode rate reproduced within
+  **0.6%** (mean 0.22%).
+
+This fixes the resolution of the study. The dense NVFP4 costs (−1.6 to −2.4 MMLU-Pro points) sit
+comfortably above the ~1-point floor and are real; the MoE deltas (≤0.6) sit inside it and read as
+*indistinguishable from BF16* — which is also how the cross-validation against NVIDIA reads them.
+We therefore report single-run numbers plus this measured floor, not a multi-seed average; the full
+second run is committed under `results-rerun/`.
+
 ## 5. Results — throughput & memory
 
 Measured at `--max-num-seqs 1`, 64k max context, median of three after a warmup pass. Decode is
@@ -371,8 +395,10 @@ We state these plainly so the numbers are read for exactly what they are.
    identical across arms) and GSM8K on 600; GPQA-Diamond is held out (HF-gated dataset);
    AIME-2025 is dropped (greedy single-pass floors at 0). Tiny sub-1% deltas are therefore
    at the edge of resolution — we lean on the cross-validation and the aggregate across tasks.
-4. **Single GPU, single run** per (arm, task); the only dispersion is lm-eval's
-   per-task stderr. No multi-seed averaging.
+4. **Single GPU, single run** per (arm, task) — but we measured the run-to-run floor by
+   re-running the whole matrix (§4.2): mean absolute drift 0.35 points across all 80 scores
+   (GSM8K essentially exact, MMLU-Pro ≤1.7 within stderr, coding up to ~3, throughput ±0.6%).
+   We report single-run numbers plus that measured floor, not a multi-seed average.
 5. **KV-cache precision varies by arm** (the NVFP4 arms ship FP8 KV-cache). This is
    part of the *deployed* configuration we deliberately measure, but it means arms
    differ in more than just weight precision.

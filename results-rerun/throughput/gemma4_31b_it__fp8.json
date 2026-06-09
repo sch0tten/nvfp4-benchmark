@@ -1,0 +1,53 @@
+{
+  "id": "gemma4_31b_it__fp8",
+  "lengths": {
+    "128": {
+      "prompt_tokens": 128,
+      "ttft_s": 0.0326,
+      "ttft_s_stdev": 0.0058,
+      "decode_tok_s": 41.94,
+      "e2e_s_256out": 6.1369
+    },
+    "1024": {
+      "prompt_tokens": 1024,
+      "ttft_s": 0.0366,
+      "ttft_s_stdev": 0.0009,
+      "decode_tok_s": 40.81,
+      "e2e_s_256out": 6.3093
+    },
+    "4096": {
+      "prompt_tokens": 4096,
+      "ttft_s": 0.0432,
+      "ttft_s_stdev": 0.0061,
+      "decode_tok_s": 39.51,
+      "e2e_s_256out": 6.5221
+    },
+    "16384": {
+      "prompt_tokens": 16384,
+      "ttft_s": 0.0667,
+      "ttft_s_stdev": 0.0008,
+      "decode_tok_s": 36.66,
+      "e2e_s_256out": 7.0502
+    },
+    "32768": {
+      "prompt_tokens": 32768,
+      "ttft_s": 0.1029,
+      "ttft_s_stdev": 0.0033,
+      "decode_tok_s": 34.04,
+      "e2e_s_256out": 7.6229
+    }
+  },
+  "repo": "RedHatAI/gemma-4-31B-it-FP8-block",
+  "revision": "f676bf1357a9d27a77932dd4bf19d619724e74f6",
+  "family": "Gemma-4-31B-it",
+  "type": "dense",
+  "format": "fp8",
+  "memory": {},
+  "config": {
+    "max_num_seqs": 1,
+    "max_model_len": 65536,
+    "gpu_memory_utilization": 0.9,
+    "decode_n": 256,
+    "repeats": 3
+  }
+}

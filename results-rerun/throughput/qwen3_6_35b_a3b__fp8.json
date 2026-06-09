@@ -1,0 +1,53 @@
+{
+  "id": "qwen3_6_35b_a3b__fp8",
+  "lengths": {
+    "128": {
+      "prompt_tokens": 128,
+      "ttft_s": 0.0825,
+      "ttft_s_stdev": 0.001,
+      "decode_tok_s": 221.57,
+      "e2e_s_256out": 1.2379
+    },
+    "1024": {
+      "prompt_tokens": 1024,
+      "ttft_s": 0.0792,
+      "ttft_s_stdev": 0.0001,
+      "decode_tok_s": 221.44,
+      "e2e_s_256out": 1.2352
+    },
+    "4096": {
+      "prompt_tokens": 4096,
+      "ttft_s": 0.1129,
+      "ttft_s_stdev": 0.0021,
+      "decode_tok_s": 218.39,
+      "e2e_s_256out": 1.2851
+    },
+    "16384": {
+      "prompt_tokens": 16384,
+      "ttft_s": 0.5473,
+      "ttft_s_stdev": 0.0028,
+      "decode_tok_s": 211.65,
+      "e2e_s_256out": 1.7569
+    },
+    "32768": {
+      "prompt_tokens": 32768,
+      "ttft_s": 1.3178,
+      "ttft_s_stdev": 0.0008,
+      "decode_tok_s": 201.38,
+      "e2e_s_256out": 2.589
+    }
+  },
+  "repo": "Qwen/Qwen3.6-35B-A3B-FP8",
+  "revision": "95a723d08a9490559dae23d0cff1d9466213d989",
+  "family": "Qwen3.6-35B-A3B",
+  "type": "moe",
+  "format": "fp8",
+  "memory": {},
+  "config": {
+    "max_num_seqs": 1,
+    "max_model_len": 65536,
+    "gpu_memory_utilization": 0.9,
+    "decode_n": 256,
+    "repeats": 3
+  }
+}

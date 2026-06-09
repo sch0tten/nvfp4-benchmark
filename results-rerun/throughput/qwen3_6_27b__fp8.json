@@ -1,0 +1,53 @@
+{
+  "id": "qwen3_6_27b__fp8",
+  "lengths": {
+    "128": {
+      "prompt_tokens": 128,
+      "ttft_s": 0.0727,
+      "ttft_s_stdev": 0.0003,
+      "decode_tok_s": 48.58,
+      "e2e_s_256out": 5.3424
+    },
+    "1024": {
+      "prompt_tokens": 1024,
+      "ttft_s": 0.1584,
+      "ttft_s_stdev": 0.0009,
+      "decode_tok_s": 48.19,
+      "e2e_s_256out": 5.4706
+    },
+    "4096": {
+      "prompt_tokens": 4096,
+      "ttft_s": 0.5862,
+      "ttft_s_stdev": 0.0017,
+      "decode_tok_s": 47.62,
+      "e2e_s_256out": 5.9624
+    },
+    "16384": {
+      "prompt_tokens": 16384,
+      "ttft_s": 2.5898,
+      "ttft_s_stdev": 0.0058,
+      "decode_tok_s": 46.25,
+      "e2e_s_256out": 8.1248
+    },
+    "32768": {
+      "prompt_tokens": 32768,
+      "ttft_s": 5.7,
+      "ttft_s_stdev": 0.0121,
+      "decode_tok_s": 44.86,
+      "e2e_s_256out": 11.4069
+    }
+  },
+  "repo": "Qwen/Qwen3.6-27B-FP8",
+  "revision": "e89b16ebf1988b3d6befa7de50abc2d76f26eb09",
+  "family": "Qwen3.6-27B",
+  "type": "dense",
+  "format": "fp8",
+  "memory": {},
+  "config": {
+    "max_num_seqs": 1,
+    "max_model_len": 65536,
+    "gpu_memory_utilization": 0.9,
+    "decode_n": 256,
+    "repeats": 3
+  }
+}

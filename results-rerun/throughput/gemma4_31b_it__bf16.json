@@ -1,0 +1,53 @@
+{
+  "id": "gemma4_31b_it__bf16",
+  "lengths": {
+    "128": {
+      "prompt_tokens": 128,
+      "ttft_s": 0.0518,
+      "ttft_s_stdev": 0.0003,
+      "decode_tok_s": 22.32,
+      "e2e_s_256out": 11.5224
+    },
+    "1024": {
+      "prompt_tokens": 1024,
+      "ttft_s": 0.057,
+      "ttft_s_stdev": 0.0004,
+      "decode_tok_s": 21.58,
+      "e2e_s_256out": 11.9184
+    },
+    "4096": {
+      "prompt_tokens": 4096,
+      "ttft_s": 0.0627,
+      "ttft_s_stdev": 0.0003,
+      "decode_tok_s": 21.08,
+      "e2e_s_256out": 12.2044
+    },
+    "16384": {
+      "prompt_tokens": 16384,
+      "ttft_s": 0.0861,
+      "ttft_s_stdev": 0.0002,
+      "decode_tok_s": 20.43,
+      "e2e_s_256out": 12.6157
+    },
+    "32768": {
+      "prompt_tokens": 32768,
+      "ttft_s": 0.124,
+      "ttft_s_stdev": 0.0038,
+      "decode_tok_s": 19.69,
+      "e2e_s_256out": 13.1268
+    }
+  },
+  "repo": "google/gemma-4-31B-it",
+  "revision": "3548789868c5356dbf307c98e6f609007b82b3eb",
+  "family": "Gemma-4-31B-it",
+  "type": "dense",
+  "format": "bf16",
+  "memory": {},
+  "config": {
+    "max_num_seqs": 1,
+    "max_model_len": 65536,
+    "gpu_memory_utilization": 0.9,
+    "decode_n": 256,
+    "repeats": 3
+  }
+}

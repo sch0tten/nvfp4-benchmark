@@ -1,0 +1,55 @@
+{
+  "id": "qwen3_6_35b_a3b__nvfp4",
+  "lengths": {
+    "128": {
+      "prompt_tokens": 128,
+      "ttft_s": 0.0955,
+      "ttft_s_stdev": 0.0012,
+      "decode_tok_s": 226.48,
+      "e2e_s_256out": 1.2259
+    },
+    "1024": {
+      "prompt_tokens": 1024,
+      "ttft_s": 0.0931,
+      "ttft_s_stdev": 0.0004,
+      "decode_tok_s": 226.36,
+      "e2e_s_256out": 1.224
+    },
+    "4096": {
+      "prompt_tokens": 4096,
+      "ttft_s": 0.1261,
+      "ttft_s_stdev": 0.0022,
+      "decode_tok_s": 223.89,
+      "e2e_s_256out": 1.2695
+    },
+    "16384": {
+      "prompt_tokens": 16384,
+      "ttft_s": 0.5829,
+      "ttft_s_stdev": 0.0035,
+      "decode_tok_s": 216.85,
+      "e2e_s_256out": 1.7635
+    },
+    "32768": {
+      "prompt_tokens": 32768,
+      "ttft_s": 1.3824,
+      "ttft_s_stdev": 0.0017,
+      "decode_tok_s": 205.23,
+      "e2e_s_256out": 2.6298
+    }
+  },
+  "repo": "nvidia/Qwen3.6-35B-A3B-NVFP4@6c7f09d (lm_head->BF16; experts/attn bit-exact NVFP4)",
+  "revision": "6c7f09d4036e97393f82e9f9ecd1a5c35ca5ee92",
+  "family": "Qwen3.6-35B-A3B",
+  "type": "moe",
+  "format": "nvfp4",
+  "memory": {
+    "model_weights_gib": null,
+    "size_gb_from_yaml": 23.5
+  },
+  "config": {
+    "max_num_seqs": 1,
+    "max_model_len": 65536,
+    "gpu_memory_utilization": 0.9,
+    "note": "BF16-lm_head variant"
+  }
+}

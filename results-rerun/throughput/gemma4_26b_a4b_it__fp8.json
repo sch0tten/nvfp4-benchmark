@@ -1,0 +1,53 @@
+{
+  "id": "gemma4_26b_a4b_it__fp8",
+  "lengths": {
+    "128": {
+      "prompt_tokens": 128,
+      "ttft_s": 0.0333,
+      "ttft_s_stdev": 0.004,
+      "decode_tok_s": 200.22,
+      "e2e_s_256out": 1.3119
+    },
+    "1024": {
+      "prompt_tokens": 1024,
+      "ttft_s": 0.0345,
+      "ttft_s_stdev": 0.001,
+      "decode_tok_s": 193.24,
+      "e2e_s_256out": 1.3593
+    },
+    "4096": {
+      "prompt_tokens": 4096,
+      "ttft_s": 0.0392,
+      "ttft_s_stdev": 0.0008,
+      "decode_tok_s": 182.09,
+      "e2e_s_256out": 1.4452
+    },
+    "16384": {
+      "prompt_tokens": 16384,
+      "ttft_s": 0.054,
+      "ttft_s_stdev": 0.0006,
+      "decode_tok_s": 155.31,
+      "e2e_s_256out": 1.7024
+    },
+    "32768": {
+      "prompt_tokens": 32768,
+      "ttft_s": 0.0818,
+      "ttft_s_stdev": 0.0028,
+      "decode_tok_s": 134.0,
+      "e2e_s_256out": 1.9923
+    }
+  },
+  "repo": "RedHatAI/gemma-4-26B-A4B-it-FP8-Dynamic",
+  "revision": "8edbb9269ec9c3faad538ee1208a07eb46051f34",
+  "family": "Gemma-4-26B-A4B-it",
+  "type": "moe",
+  "format": "fp8",
+  "memory": {},
+  "config": {
+    "max_num_seqs": 1,
+    "max_model_len": 65536,
+    "gpu_memory_utilization": 0.9,
+    "decode_n": 256,
+    "repeats": 3
+  }
+}

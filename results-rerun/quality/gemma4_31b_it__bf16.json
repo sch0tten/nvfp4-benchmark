@@ -1,0 +1,151 @@
+{
+ "arm": "gemma4_31b_it__bf16",
+ "repo": "google/gemma-4-31B-it",
+ "revision": "3548789868c5356dbf307c98e6f609007b82b3eb",
+ "results": {
+  "mmlu_pro_biology": {
+   "name": "mmlu_pro_biology",
+   "alias": "biology",
+   "sample_len": 50,
+   "exact_match,custom-extract": 0.96,
+   "exact_match_stderr,custom-extract": 0.02799416848895062
+  },
+  "mmlu_pro_business": {
+   "name": "mmlu_pro_business",
+   "alias": "business",
+   "sample_len": 50,
+   "exact_match,custom-extract": 0.88,
+   "exact_match_stderr,custom-extract": 0.0464230765979198
+  },
+  "mmlu_pro_chemistry": {
+   "name": "mmlu_pro_chemistry",
+   "alias": "chemistry",
+   "sample_len": 50,
+   "exact_match,custom-extract": 0.94,
+   "exact_match_stderr,custom-extract": 0.0339266916772512
+  },
+  "mmlu_pro_computer_science": {
+   "name": "mmlu_pro_computer_science",
+   "alias": "computer_science",
+   "sample_len": 50,
+   "exact_match,custom-extract": 0.84,
+   "exact_match_stderr,custom-extract": 0.052372293656638154
+  },
+  "mmlu_pro_economics": {
+   "name": "mmlu_pro_economics",
+   "alias": "economics",
+   "sample_len": 50,
+   "exact_match,custom-extract": 0.9,
+   "exact_match_stderr,custom-extract": 0.04285714285714283
+  },
+  "mmlu_pro_engineering": {
+   "name": "mmlu_pro_engineering",
+   "alias": "engineering",
+   "sample_len": 50,
+   "exact_match,custom-extract": 0.84,
+   "exact_match_stderr,custom-extract": 0.05237229365663815
+  },
+  "mmlu_pro_health": {
+   "name": "mmlu_pro_health",
+   "alias": "health",
+   "sample_len": 50,
+   "exact_match,custom-extract": 0.74,
+   "exact_match_stderr,custom-extract": 0.06266203485560376
+  },
+  "mmlu_pro_history": {
+   "name": "mmlu_pro_history",
+   "alias": "history",
+   "sample_len": 50,
+   "exact_match,custom-extract": 0.72,
+   "exact_match_stderr,custom-extract": 0.06414269805898186
+  },
+  "mmlu_pro_law": {
+   "name": "mmlu_pro_law",
+   "alias": "law",
+   "sample_len": 50,
+   "exact_match,custom-extract": 0.76,
+   "exact_match_stderr,custom-extract": 0.061011875725893214
+  },
+  "mmlu_pro_math": {
+   "name": "mmlu_pro_math",
+   "alias": "math",
+   "sample_len": 50,
+   "exact_match,custom-extract": 0.96,
+   "exact_match_stderr,custom-extract": 0.027994168488950623
+  },
+  "mmlu_pro_other": {
+   "name": "mmlu_pro_other",
+   "alias": "other",
+   "sample_len": 50,
+   "exact_match,custom-extract": 0.74,
+   "exact_match_stderr,custom-extract": 0.06266203485560377
+  },
+  "mmlu_pro_philosophy": {
+   "name": "mmlu_pro_philosophy",
+   "alias": "philosophy",
+   "sample_len": 50,
+   "exact_match,custom-extract": 0.84,
+   "exact_match_stderr,custom-extract": 0.05237229365663815
+  },
+  "mmlu_pro_physics": {
+   "name": "mmlu_pro_physics",
+   "alias": "physics",
+   "sample_len": 50,
+   "exact_match,custom-extract": 0.94,
+   "exact_match_stderr,custom-extract": 0.033926691677251195
+  },
+  "mmlu_pro_psychology": {
+   "name": "mmlu_pro_psychology",
+   "alias": "psychology",
+   "sample_len": 50,
+   "exact_match,custom-extract": 0.84,
+   "exact_match_stderr,custom-extract": 0.052372293656638154
+  },
+  "mmlu_pro": {
+   "alias": "mmlu_pro",
+   "name": "mmlu_pro",
+   "sample_len": 700,
+   "exact_match,custom-extract": 0.85,
+   "exact_match_stderr,custom-extract": 0.013271584071746213,
+   "sample_count": {
+    "exact_match,custom-extract": 700
+   }
+  },
+  "gsm8k": {
+   "name": "gsm8k",
+   "alias": "gsm8k",
+   "sample_len": 600,
+   "exact_match,strict-match": 0.9666666666666667,
+   "exact_match_stderr,strict-match": 0.007334395633079899,
+   "exact_match,flexible-extract": 0.9666666666666667,
+   "exact_match_stderr,flexible-extract": 0.007334395633079899
+  },
+  "ifeval": {
+   "name": "ifeval",
+   "alias": "ifeval",
+   "sample_len": 541,
+   "prompt_level_strict_acc,none": 0.9131238447319778,
+   "prompt_level_strict_acc_stderr,none": 0.012120436438929382,
+   "inst_level_strict_acc,none": 0.9400479616306955,
+   "inst_level_strict_acc_stderr,none": "N/A",
+   "prompt_level_loose_acc,none": 0.933456561922366,
+   "prompt_level_loose_acc_stderr,none": 0.01072513566576045,
+   "inst_level_loose_acc,none": 0.9556354916067147,
+   "inst_level_loose_acc_stderr,none": "N/A"
+  },
+  "humaneval_instruct": {
+   "name": "humaneval_instruct",
+   "alias": "humaneval_instruct",
+   "sample_len": 164,
+   "pass@1,create_test": 0.9329268292682927,
+   "pass@1_stderr,create_test": 0.019593156514629395
+  },
+  "mbpp_instruct": {
+   "name": "mbpp_instruct",
+   "alias": "mbpp_instruct",
+   "sample_len": 500,
+   "pass_at_1,extract_code": 0.704,
+   "pass_at_1_stderr,extract_code": 0.020435342091896135
+  }
+ }
+}

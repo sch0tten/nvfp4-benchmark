@@ -1,0 +1,1424 @@
+{
+  "results": {
+    "mmlu_pro_biology": {
+      "name": "mmlu_pro_biology",
+      "alias": "biology",
+      "sample_len": 50,
+      "exact_match,custom-extract": 0.96,
+      "exact_match_stderr,custom-extract": 0.02799416848895062
+    },
+    "mmlu_pro_business": {
+      "name": "mmlu_pro_business",
+      "alias": "business",
+      "sample_len": 50,
+      "exact_match,custom-extract": 0.86,
+      "exact_match_stderr,custom-extract": 0.04956957592256416
+    },
+    "mmlu_pro_chemistry": {
+      "name": "mmlu_pro_chemistry",
+      "alias": "chemistry",
+      "sample_len": 50,
+      "exact_match,custom-extract": 0.94,
+      "exact_match_stderr,custom-extract": 0.0339266916772512
+    },
+    "mmlu_pro_computer_science": {
+      "name": "mmlu_pro_computer_science",
+      "alias": "computer_science",
+      "sample_len": 50,
+      "exact_match,custom-extract": 0.84,
+      "exact_match_stderr,custom-extract": 0.05237229365663815
+    },
+    "mmlu_pro_economics": {
+      "name": "mmlu_pro_economics",
+      "alias": "economics",
+      "sample_len": 50,
+      "exact_match,custom-extract": 0.92,
+      "exact_match_stderr,custom-extract": 0.038756171332144415
+    },
+    "mmlu_pro_engineering": {
+      "name": "mmlu_pro_engineering",
+      "alias": "engineering",
+      "sample_len": 50,
+      "exact_match,custom-extract": 0.9,
+      "exact_match_stderr,custom-extract": 0.04285714285714284
+    },
+    "mmlu_pro_health": {
+      "name": "mmlu_pro_health",
+      "alias": "health",
+      "sample_len": 50,
+      "exact_match,custom-extract": 0.8,
+      "exact_match_stderr,custom-extract": 0.057142857142857155
+    },
+    "mmlu_pro_history": {
+      "name": "mmlu_pro_history",
+      "alias": "history",
+      "sample_len": 50,
+      "exact_match,custom-extract": 0.7,
+      "exact_match_stderr,custom-extract": 0.06546536707079771
+    },
+    "mmlu_pro_law": {
+      "name": "mmlu_pro_law",
+      "alias": "law",
+      "sample_len": 50,
+      "exact_match,custom-extract": 0.76,
+      "exact_match_stderr,custom-extract": 0.061011875725893214
+    },
+    "mmlu_pro_math": {
+      "name": "mmlu_pro_math",
+      "alias": "math",
+      "sample_len": 50,
+      "exact_match,custom-extract": 0.96,
+      "exact_match_stderr,custom-extract": 0.027994168488950623
+    },
+    "mmlu_pro_other": {
+      "name": "mmlu_pro_other",
+      "alias": "other",
+      "sample_len": 50,
+      "exact_match,custom-extract": 0.7,
+      "exact_match_stderr,custom-extract": 0.0654653670707977
+    },
+    "mmlu_pro_philosophy": {
+      "name": "mmlu_pro_philosophy",
+      "alias": "philosophy",
+      "sample_len": 50,
+      "exact_match,custom-extract": 0.82,
+      "exact_match_stderr,custom-extract": 0.05488392203513869
+    },
+    "mmlu_pro_physics": {
+      "name": "mmlu_pro_physics",
+      "alias": "physics",
+      "sample_len": 50,
+      "exact_match,custom-extract": 0.94,
+      "exact_match_stderr,custom-extract": 0.033926691677251195
+    },
+    "mmlu_pro_psychology": {
+      "name": "mmlu_pro_psychology",
+      "alias": "psychology",
+      "sample_len": 50,
+      "exact_match,custom-extract": 0.84,
+      "exact_match_stderr,custom-extract": 0.052372293656638154
+    },
+    "mmlu_pro": {
+      "alias": "mmlu_pro",
+      "name": "mmlu_pro",
+      "sample_len": 700,
+      "exact_match,custom-extract": 0.8528571428571429,
+      "exact_match_stderr,custom-extract": 0.01311690935854809,
+      "sample_count": {
+        "exact_match,custom-extract": 700
+      }
+    }
+  },
+  "groups": {
+    "mmlu_pro": {
+      "alias": "mmlu_pro",
+      "name": "mmlu_pro",
+      "sample_len": 700,
+      "exact_match,custom-extract": 0.8528571428571429,
+      "exact_match_stderr,custom-extract": 0.01311690935854809,
+      "sample_count": {
+        "exact_match,custom-extract": 700
+      }
+    }
+  },
+  "group_subtasks": {
+    "mmlu_pro": [
+      "mmlu_pro_biology",
+      "mmlu_pro_business",
+      "mmlu_pro_chemistry",
+      "mmlu_pro_computer_science",
+      "mmlu_pro_economics",
+      "mmlu_pro_engineering",
+      "mmlu_pro_health",
+      "mmlu_pro_history",
+      "mmlu_pro_law",
+      "mmlu_pro_math",
+      "mmlu_pro_other",
+      "mmlu_pro_philosophy",
+      "mmlu_pro_physics",
+      "mmlu_pro_psychology"
+    ]
+  },
+  "configs": {
+    "mmlu_pro_biology": {
+      "task": "mmlu_pro_biology",
+      "task_alias": "biology",
+      "dataset_path": "TIGER-Lab/MMLU-Pro",
+      "test_split": "test",
+      "fewshot_split": "validation",
+      "process_docs": "functools.partial(<function process_docs at 0x7649ee443100>, subject='biology')",
+      "doc_to_text": "functools.partial(<function format_cot_example at 0x7649df738b80>, including_answer=False)",
+      "doc_to_target": "answer",
+      "unsafe_code": false,
+      "description": "The following are multiple choice questions (with answers) about biology. Think step by step and then finish your answer with \"the answer is (X)\" where X is the correct letter choice.\n",
+      "target_delimiter": " ",
+      "fewshot_delimiter": "\n\n",
+      "fewshot_config": {
+        "sampler": "first_n",
+        "split": "validation",
+        "process_docs": "functools.partial(<function process_docs at 0x7649ee443100>, subject='biology')",
+        "fewshot_indices": null,
+        "samples": null,
+        "doc_to_text": "functools.partial(<function format_cot_example at 0x7649df738b80>, including_answer=False)",
+        "doc_to_choice": null,
+        "doc_to_target": "functools.partial(<function format_cot_target at 0x7649ee4414e0>, including_answer=True)",
+        "gen_prefix": null,
+        "fewshot_delimiter": "\n\n",
+        "target_delimiter": " "
+      },
+      "num_fewshot": 5,
+      "metric_list": [
+        {
+          "metric": "exact_match",
+          "aggregation": "mean",
+          "higher_is_better": true,
+          "ignore_case": true,
+          "ignore_punctuation": true
+        }
+      ],
+      "output_type": "generate_until",
+      "generation_kwargs": {
+        "until": [
+          "<|im_end|>"
+        ],
+        "max_gen_toks": 4096,
+        "do_sample": false,
+        "temperature": 0.0
+      },
+      "repeats": 1,
+      "filter_list": [
+        {
+          "name": "custom-extract",
+          "filter": [
+            {
+              "function": "regex",
+              "regex_pattern": "answer is \\(?([ABCDEFGHIJ])\\)?"
+            },
+            {
+              "function": "take_first"
+            }
+          ]
+        }
+      ],
+      "should_decontaminate": false,
+      "metadata": {
+        "version": 3.1,
+        "pretrained": "RedHatAI/gemma-4-31B-it-FP8-block",
+        "revision": "f676bf1357a9d27a77932dd4bf19d619724e74f6",
+        "tokenizer": "RedHatAI/gemma-4-31B-it-FP8-block",
+        "tokenizer_revision": "f676bf1357a9d27a77932dd4bf19d619724e74f6",
+        "dtype": "auto",
+        "max_model_len": 16384,
+        "gpu_memory_utilization": 0.9,
+        "max_num_seqs": 64,
+        "tensor_parallel_size": 1,
+        "trust_remote_code": true,
+        "enforce_eager": false,
+        "config_source": "/home/stefan0/llms/qwen3.6-27B/.venv-vllm022/lib/python3.12/site-packages/lm_eval/tasks/mmlu_pro/mmlu_pro_biology.yaml"
+      }
+    },
+    "mmlu_pro_business": {
+      "task": "mmlu_pro_business",
+      "task_alias": "business",
+      "dataset_path": "TIGER-Lab/MMLU-Pro",
+      "test_split": "test",
+      "fewshot_split": "validation",
+      "process_docs": "functools.partial(<function process_docs at 0x7649ee443100>, subject='business')",
+      "doc_to_text": "functools.partial(<function format_cot_example at 0x7649df738b80>, including_answer=False)",
+      "doc_to_target": "answer",
+      "unsafe_code": false,
+      "description": "The following are multiple choice questions (with answers) about business. Think step by step and then finish your answer with \"the answer is (X)\" where X is the correct letter choice.\n",
+      "target_delimiter": " ",
+      "fewshot_delimiter": "\n\n",
+      "fewshot_config": {
+        "sampler": "first_n",
+        "split": "validation",
+        "process_docs": "functools.partial(<function process_docs at 0x7649ee443100>, subject='business')",
+        "fewshot_indices": null,
+        "samples": null,
+        "doc_to_text": "functools.partial(<function format_cot_example at 0x7649df738b80>, including_answer=False)",
+        "doc_to_choice": null,
+        "doc_to_target": "functools.partial(<function format_cot_target at 0x7649ee4414e0>, including_answer=True)",
+        "gen_prefix": null,
+        "fewshot_delimiter": "\n\n",
+        "target_delimiter": " "
+      },
+      "num_fewshot": 5,
+      "metric_list": [
+        {
+          "metric": "exact_match",
+          "aggregation": "mean",
+          "higher_is_better": true,
+          "ignore_case": true,
+          "ignore_punctuation": true
+        }
+      ],
+      "output_type": "generate_until",
+      "generation_kwargs": {
+        "until": [
+          "<|im_end|>"
+        ],
+        "max_gen_toks": 4096,
+        "do_sample": false,
+        "temperature": 0.0
+      },
+      "repeats": 1,
+      "filter_list": [
+        {
+          "name": "custom-extract",
+          "filter": [
+            {
+              "function": "regex",
+              "regex_pattern": "answer is \\(?([ABCDEFGHIJ])\\)?"
+            },
+            {
+              "function": "take_first"
+            }
+          ]
+        }
+      ],
+      "should_decontaminate": false,
+      "metadata": {
+        "version": 3.1,
+        "pretrained": "RedHatAI/gemma-4-31B-it-FP8-block",
+        "revision": "f676bf1357a9d27a77932dd4bf19d619724e74f6",
+        "tokenizer": "RedHatAI/gemma-4-31B-it-FP8-block",
+        "tokenizer_revision": "f676bf1357a9d27a77932dd4bf19d619724e74f6",
+        "dtype": "auto",
+        "max_model_len": 16384,
+        "gpu_memory_utilization": 0.9,
+        "max_num_seqs": 64,
+        "tensor_parallel_size": 1,
+        "trust_remote_code": true,
+        "enforce_eager": false,
+        "config_source": "/home/stefan0/llms/qwen3.6-27B/.venv-vllm022/lib/python3.12/site-packages/lm_eval/tasks/mmlu_pro/mmlu_pro_business.yaml"
+      }
+    },
+    "mmlu_pro_chemistry": {
+      "task": "mmlu_pro_chemistry",
+      "task_alias": "chemistry",
+      "dataset_path": "TIGER-Lab/MMLU-Pro",
+      "test_split": "test",
+      "fewshot_split": "validation",
+      "process_docs": "functools.partial(<function process_docs at 0x7649ee443100>, subject='chemistry')",
+      "doc_to_text": "functools.partial(<function format_cot_example at 0x7649df738b80>, including_answer=False)",
+      "doc_to_target": "answer",
+      "unsafe_code": false,
+      "description": "The following are multiple choice questions (with answers) about chemistry. Think step by step and then finish your answer with \"the answer is (X)\" where X is the correct letter choice.\n",
+      "target_delimiter": " ",
+      "fewshot_delimiter": "\n\n",
+      "fewshot_config": {
+        "sampler": "first_n",
+        "split": "validation",
+        "process_docs": "functools.partial(<function process_docs at 0x7649ee443100>, subject='chemistry')",
+        "fewshot_indices": null,
+        "samples": null,
+        "doc_to_text": "functools.partial(<function format_cot_example at 0x7649df738b80>, including_answer=False)",
+        "doc_to_choice": null,
+        "doc_to_target": "functools.partial(<function format_cot_target at 0x7649ee4414e0>, including_answer=True)",
+        "gen_prefix": null,
+        "fewshot_delimiter": "\n\n",
+        "target_delimiter": " "
+      },
+      "num_fewshot": 5,
+      "metric_list": [
+        {
+          "metric": "exact_match",
+          "aggregation": "mean",
+          "higher_is_better": true,
+          "ignore_case": true,
+          "ignore_punctuation": true
+        }
+      ],
+      "output_type": "generate_until",
+      "generation_kwargs": {
+        "until": [
+          "<|im_end|>"
+        ],
+        "max_gen_toks": 4096,
+        "do_sample": false,
+        "temperature": 0.0
+      },
+      "repeats": 1,
+      "filter_list": [
+        {
+          "name": "custom-extract",
+          "filter": [
+            {
+              "function": "regex",
+              "regex_pattern": "answer is \\(?([ABCDEFGHIJ])\\)?"
+            },
+            {
+              "function": "take_first"
+            }
+          ]
+        }
+      ],
+      "should_decontaminate": false,
+      "metadata": {
+        "version": 3.1,
+        "pretrained": "RedHatAI/gemma-4-31B-it-FP8-block",
+        "revision": "f676bf1357a9d27a77932dd4bf19d619724e74f6",
+        "tokenizer": "RedHatAI/gemma-4-31B-it-FP8-block",
+        "tokenizer_revision": "f676bf1357a9d27a77932dd4bf19d619724e74f6",
+        "dtype": "auto",
+        "max_model_len": 16384,
+        "gpu_memory_utilization": 0.9,
+        "max_num_seqs": 64,
+        "tensor_parallel_size": 1,
+        "trust_remote_code": true,
+        "enforce_eager": false,
+        "config_source": "/home/stefan0/llms/qwen3.6-27B/.venv-vllm022/lib/python3.12/site-packages/lm_eval/tasks/mmlu_pro/mmlu_pro_chemistry.yaml"
+      }
+    },
+    "mmlu_pro_computer_science": {
+      "task": "mmlu_pro_computer_science",
+      "task_alias": "computer_science",
+      "dataset_path": "TIGER-Lab/MMLU-Pro",
+      "test_split": "test",
+      "fewshot_split": "validation",
+      "process_docs": "functools.partial(<function process_docs at 0x7649ee443100>, subject='computer science')",
+      "doc_to_text": "functools.partial(<function format_cot_example at 0x7649df738b80>, including_answer=False)",
+      "doc_to_target": "answer",
+      "unsafe_code": false,
+      "description": "The following are multiple choice questions (with answers) about computer science. Think step by step and then finish your answer with \"the answer is (X)\" where X is the correct letter choice.\n",
+      "target_delimiter": " ",
+      "fewshot_delimiter": "\n\n",
+      "fewshot_config": {
+        "sampler": "first_n",
+        "split": "validation",
+        "process_docs": "functools.partial(<function process_docs at 0x7649ee443100>, subject='computer science')",
+        "fewshot_indices": null,
+        "samples": null,
+        "doc_to_text": "functools.partial(<function format_cot_example at 0x7649df738b80>, including_answer=False)",
+        "doc_to_choice": null,
+        "doc_to_target": "functools.partial(<function format_cot_target at 0x7649ee4414e0>, including_answer=True)",
+        "gen_prefix": null,
+        "fewshot_delimiter": "\n\n",
+        "target_delimiter": " "
+      },
+      "num_fewshot": 5,
+      "metric_list": [
+        {
+          "metric": "exact_match",
+          "aggregation": "mean",
+          "higher_is_better": true,
+          "ignore_case": true,
+          "ignore_punctuation": true
+        }
+      ],
+      "output_type": "generate_until",
+      "generation_kwargs": {
+        "until": [
+          "<|im_end|>"
+        ],
+        "max_gen_toks": 4096,
+        "do_sample": false,
+        "temperature": 0.0
+      },
+      "repeats": 1,
+      "filter_list": [
+        {
+          "name": "custom-extract",
+          "filter": [
+            {
+              "function": "regex",
+              "regex_pattern": "answer is \\(?([ABCDEFGHIJ])\\)?"
+            },
+            {
+              "function": "take_first"
+            }
+          ]
+        }
+      ],
+      "should_decontaminate": false,
+      "metadata": {
+        "version": 3.1,
+        "pretrained": "RedHatAI/gemma-4-31B-it-FP8-block",
+        "revision": "f676bf1357a9d27a77932dd4bf19d619724e74f6",
+        "tokenizer": "RedHatAI/gemma-4-31B-it-FP8-block",
+        "tokenizer_revision": "f676bf1357a9d27a77932dd4bf19d619724e74f6",
+        "dtype": "auto",
+        "max_model_len": 16384,
+        "gpu_memory_utilization": 0.9,
+        "max_num_seqs": 64,
+        "tensor_parallel_size": 1,
+        "trust_remote_code": true,
+        "enforce_eager": false,
+        "config_source": "/home/stefan0/llms/qwen3.6-27B/.venv-vllm022/lib/python3.12/site-packages/lm_eval/tasks/mmlu_pro/mmlu_pro_computer_science.yaml"
+      }
+    },
+    "mmlu_pro_economics": {
+      "task": "mmlu_pro_economics",
+      "task_alias": "economics",
+      "dataset_path": "TIGER-Lab/MMLU-Pro",
+      "test_split": "test",
+      "fewshot_split": "validation",
+      "process_docs": "functools.partial(<function process_docs at 0x7649ee443100>, subject='economics')",
+      "doc_to_text": "functools.partial(<function format_cot_example at 0x7649df738b80>, including_answer=False)",
+      "doc_to_target": "answer",
+      "unsafe_code": false,
+      "description": "The following are multiple choice questions (with answers) about economics. Think step by step and then finish your answer with \"the answer is (X)\" where X is the correct letter choice.\n",
+      "target_delimiter": " ",
+      "fewshot_delimiter": "\n\n",
+      "fewshot_config": {
+        "sampler": "first_n",
+        "split": "validation",
+        "process_docs": "functools.partial(<function process_docs at 0x7649ee443100>, subject='economics')",
+        "fewshot_indices": null,
+        "samples": null,
+        "doc_to_text": "functools.partial(<function format_cot_example at 0x7649df738b80>, including_answer=False)",
+        "doc_to_choice": null,
+        "doc_to_target": "functools.partial(<function format_cot_target at 0x7649ee4414e0>, including_answer=True)",
+        "gen_prefix": null,
+        "fewshot_delimiter": "\n\n",
+        "target_delimiter": " "
+      },
+      "num_fewshot": 5,
+      "metric_list": [
+        {
+          "metric": "exact_match",
+          "aggregation": "mean",
+          "higher_is_better": true,
+          "ignore_case": true,
+          "ignore_punctuation": true
+        }
+      ],
+      "output_type": "generate_until",
+      "generation_kwargs": {
+        "until": [
+          "<|im_end|>"
+        ],
+        "max_gen_toks": 4096,
+        "do_sample": false,
+        "temperature": 0.0
+      },
+      "repeats": 1,
+      "filter_list": [
+        {
+          "name": "custom-extract",
+          "filter": [
+            {
+              "function": "regex",
+              "regex_pattern": "answer is \\(?([ABCDEFGHIJ])\\)?"
+            },
+            {
+              "function": "take_first"
+            }
+          ]
+        }
+      ],
+      "should_decontaminate": false,
+      "metadata": {
+        "version": 3.1,
+        "pretrained": "RedHatAI/gemma-4-31B-it-FP8-block",
+        "revision": "f676bf1357a9d27a77932dd4bf19d619724e74f6",
+        "tokenizer": "RedHatAI/gemma-4-31B-it-FP8-block",
+        "tokenizer_revision": "f676bf1357a9d27a77932dd4bf19d619724e74f6",
+        "dtype": "auto",
+        "max_model_len": 16384,
+        "gpu_memory_utilization": 0.9,
+        "max_num_seqs": 64,
+        "tensor_parallel_size": 1,
+        "trust_remote_code": true,
+        "enforce_eager": false,
+        "config_source": "/home/stefan0/llms/qwen3.6-27B/.venv-vllm022/lib/python3.12/site-packages/lm_eval/tasks/mmlu_pro/mmlu_pro_economics.yaml"
+      }
+    },
+    "mmlu_pro_engineering": {
+      "task": "mmlu_pro_engineering",
+      "task_alias": "engineering",
+      "dataset_path": "TIGER-Lab/MMLU-Pro",
+      "test_split": "test",
+      "fewshot_split": "validation",
+      "process_docs": "functools.partial(<function process_docs at 0x7649ee443100>, subject='engineering')",
+      "doc_to_text": "functools.partial(<function format_cot_example at 0x7649df738b80>, including_answer=False)",
+      "doc_to_target": "answer",
+      "unsafe_code": false,
+      "description": "The following are multiple choice questions (with answers) about engineering. Think step by step and then finish your answer with \"the answer is (X)\" where X is the correct letter choice.\n",
+      "target_delimiter": " ",
+      "fewshot_delimiter": "\n\n",
+      "fewshot_config": {
+        "sampler": "first_n",
+        "split": "validation",
+        "process_docs": "functools.partial(<function process_docs at 0x7649ee443100>, subject='engineering')",
+        "fewshot_indices": null,
+        "samples": null,
+        "doc_to_text": "functools.partial(<function format_cot_example at 0x7649df738b80>, including_answer=False)",
+        "doc_to_choice": null,
+        "doc_to_target": "functools.partial(<function format_cot_target at 0x7649ee4414e0>, including_answer=True)",
+        "gen_prefix": null,
+        "fewshot_delimiter": "\n\n",
+        "target_delimiter": " "
+      },
+      "num_fewshot": 5,
+      "metric_list": [
+        {
+          "metric": "exact_match",
+          "aggregation": "mean",
+          "higher_is_better": true,
+          "ignore_case": true,
+          "ignore_punctuation": true
+        }
+      ],
+      "output_type": "generate_until",
+      "generation_kwargs": {
+        "until": [
+          "<|im_end|>"
+        ],
+        "max_gen_toks": 4096,
+        "do_sample": false,
+        "temperature": 0.0
+      },
+      "repeats": 1,
+      "filter_list": [
+        {
+          "name": "custom-extract",
+          "filter": [
+            {
+              "function": "regex",
+              "regex_pattern": "answer is \\(?([ABCDEFGHIJ])\\)?"
+            },
+            {
+              "function": "take_first"
+            }
+          ]
+        }
+      ],
+      "should_decontaminate": false,
+      "metadata": {
+        "version": 3.1,
+        "pretrained": "RedHatAI/gemma-4-31B-it-FP8-block",
+        "revision": "f676bf1357a9d27a77932dd4bf19d619724e74f6",
+        "tokenizer": "RedHatAI/gemma-4-31B-it-FP8-block",
+        "tokenizer_revision": "f676bf1357a9d27a77932dd4bf19d619724e74f6",
+        "dtype": "auto",
+        "max_model_len": 16384,
+        "gpu_memory_utilization": 0.9,
+        "max_num_seqs": 64,
+        "tensor_parallel_size": 1,
+        "trust_remote_code": true,
+        "enforce_eager": false,
+        "config_source": "/home/stefan0/llms/qwen3.6-27B/.venv-vllm022/lib/python3.12/site-packages/lm_eval/tasks/mmlu_pro/mmlu_pro_engineering.yaml"
+      }
+    },
+    "mmlu_pro_health": {
+      "task": "mmlu_pro_health",
+      "task_alias": "health",
+      "dataset_path": "TIGER-Lab/MMLU-Pro",
+      "test_split": "test",
+      "fewshot_split": "validation",
+      "process_docs": "functools.partial(<function process_docs at 0x7649ee443100>, subject='health')",
+      "doc_to_text": "functools.partial(<function format_cot_example at 0x7649df738b80>, including_answer=False)",
+      "doc_to_target": "answer",
+      "unsafe_code": false,
+      "description": "The following are multiple choice questions (with answers) about health. Think step by step and then finish your answer with \"the answer is (X)\" where X is the correct letter choice.\n",
+      "target_delimiter": " ",
+      "fewshot_delimiter": "\n\n",
+      "fewshot_config": {
+        "sampler": "first_n",
+        "split": "validation",
+        "process_docs": "functools.partial(<function process_docs at 0x7649ee443100>, subject='health')",
+        "fewshot_indices": null,
+        "samples": null,
+        "doc_to_text": "functools.partial(<function format_cot_example at 0x7649df738b80>, including_answer=False)",
+        "doc_to_choice": null,
+        "doc_to_target": "functools.partial(<function format_cot_target at 0x7649ee4414e0>, including_answer=True)",
+        "gen_prefix": null,
+        "fewshot_delimiter": "\n\n",
+        "target_delimiter": " "
+      },
+      "num_fewshot": 5,
+      "metric_list": [
+        {
+          "metric": "exact_match",
+          "aggregation": "mean",
+          "higher_is_better": true,
+          "ignore_case": true,
+          "ignore_punctuation": true
+        }
+      ],
+      "output_type": "generate_until",
+      "generation_kwargs": {
+        "until": [
+          "<|im_end|>"
+        ],
+        "max_gen_toks": 4096,
+        "do_sample": false,
+        "temperature": 0.0
+      },
+      "repeats": 1,
+      "filter_list": [
+        {
+          "name": "custom-extract",
+          "filter": [
+            {
+              "function": "regex",
+              "regex_pattern": "answer is \\(?([ABCDEFGHIJ])\\)?"
+            },
+            {
+              "function": "take_first"
+            }
+          ]
+        }
+      ],
+      "should_decontaminate": false,
+      "metadata": {
+        "version": 3.1,
+        "pretrained": "RedHatAI/gemma-4-31B-it-FP8-block",
+        "revision": "f676bf1357a9d27a77932dd4bf19d619724e74f6",
+        "tokenizer": "RedHatAI/gemma-4-31B-it-FP8-block",
+        "tokenizer_revision": "f676bf1357a9d27a77932dd4bf19d619724e74f6",
+        "dtype": "auto",
+        "max_model_len": 16384,
+        "gpu_memory_utilization": 0.9,
+        "max_num_seqs": 64,
+        "tensor_parallel_size": 1,
+        "trust_remote_code": true,
+        "enforce_eager": false,
+        "config_source": "/home/stefan0/llms/qwen3.6-27B/.venv-vllm022/lib/python3.12/site-packages/lm_eval/tasks/mmlu_pro/mmlu_pro_health.yaml"
+      }
+    },
+    "mmlu_pro_history": {
+      "task": "mmlu_pro_history",
+      "task_alias": "history",
+      "dataset_path": "TIGER-Lab/MMLU-Pro",
+      "test_split": "test",
+      "fewshot_split": "validation",
+      "process_docs": "functools.partial(<function process_docs at 0x7649ee443100>, subject='history')",
+      "doc_to_text": "functools.partial(<function format_cot_example at 0x7649df738b80>, including_answer=False)",
+      "doc_to_target": "answer",
+      "unsafe_code": false,
+      "description": "The following are multiple choice questions (with answers) about history. Think step by step and then finish your answer with \"the answer is (X)\" where X is the correct letter choice.\n",
+      "target_delimiter": " ",
+      "fewshot_delimiter": "\n\n",
+      "fewshot_config": {
+        "sampler": "first_n",
+        "split": "validation",
+        "process_docs": "functools.partial(<function process_docs at 0x7649ee443100>, subject='history')",
+        "fewshot_indices": null,
+        "samples": null,
+        "doc_to_text": "functools.partial(<function format_cot_example at 0x7649df738b80>, including_answer=False)",
+        "doc_to_choice": null,
+        "doc_to_target": "functools.partial(<function format_cot_target at 0x7649ee4414e0>, including_answer=True)",
+        "gen_prefix": null,
+        "fewshot_delimiter": "\n\n",
+        "target_delimiter": " "
+      },
+      "num_fewshot": 5,
+      "metric_list": [
+        {
+          "metric": "exact_match",
+          "aggregation": "mean",
+          "higher_is_better": true,
+          "ignore_case": true,
+          "ignore_punctuation": true
+        }
+      ],
+      "output_type": "generate_until",
+      "generation_kwargs": {
+        "until": [
+          "<|im_end|>"
+        ],
+        "max_gen_toks": 4096,
+        "do_sample": false,
+        "temperature": 0.0
+      },
+      "repeats": 1,
+      "filter_list": [
+        {
+          "name": "custom-extract",
+          "filter": [
+            {
+              "function": "regex",
+              "regex_pattern": "answer is \\(?([ABCDEFGHIJ])\\)?"
+            },
+            {
+              "function": "take_first"
+            }
+          ]
+        }
+      ],
+      "should_decontaminate": false,
+      "metadata": {
+        "version": 3.1,
+        "pretrained": "RedHatAI/gemma-4-31B-it-FP8-block",
+        "revision": "f676bf1357a9d27a77932dd4bf19d619724e74f6",
+        "tokenizer": "RedHatAI/gemma-4-31B-it-FP8-block",
+        "tokenizer_revision": "f676bf1357a9d27a77932dd4bf19d619724e74f6",
+        "dtype": "auto",
+        "max_model_len": 16384,
+        "gpu_memory_utilization": 0.9,
+        "max_num_seqs": 64,
+        "tensor_parallel_size": 1,
+        "trust_remote_code": true,
+        "enforce_eager": false,
+        "config_source": "/home/stefan0/llms/qwen3.6-27B/.venv-vllm022/lib/python3.12/site-packages/lm_eval/tasks/mmlu_pro/mmlu_pro_history.yaml"
+      }
+    },
+    "mmlu_pro_law": {
+      "task": "mmlu_pro_law",
+      "task_alias": "law",
+      "dataset_path": "TIGER-Lab/MMLU-Pro",
+      "test_split": "test",
+      "fewshot_split": "validation",
+      "process_docs": "functools.partial(<function process_docs at 0x7649ee443100>, subject='law')",
+      "doc_to_text": "functools.partial(<function format_cot_example at 0x7649df738b80>, including_answer=False)",
+      "doc_to_target": "answer",
+      "unsafe_code": false,
+      "description": "The following are multiple choice questions (with answers) about law. Think step by step and then finish your answer with \"the answer is (X)\" where X is the correct letter choice.\n",
+      "target_delimiter": " ",
+      "fewshot_delimiter": "\n\n",
+      "fewshot_config": {
+        "sampler": "first_n",
+        "split": "validation",
+        "process_docs": "functools.partial(<function process_docs at 0x7649ee443100>, subject='law')",
+        "fewshot_indices": null,
+        "samples": null,
+        "doc_to_text": "functools.partial(<function format_cot_example at 0x7649df738b80>, including_answer=False)",
+        "doc_to_choice": null,
+        "doc_to_target": "functools.partial(<function format_cot_target at 0x7649ee4414e0>, including_answer=True)",
+        "gen_prefix": null,
+        "fewshot_delimiter": "\n\n",
+        "target_delimiter": " "
+      },
+      "num_fewshot": 5,
+      "metric_list": [
+        {
+          "metric": "exact_match",
+          "aggregation": "mean",
+          "higher_is_better": true,
+          "ignore_case": true,
+          "ignore_punctuation": true
+        }
+      ],
+      "output_type": "generate_until",
+      "generation_kwargs": {
+        "until": [
+          "<|im_end|>"
+        ],
+        "max_gen_toks": 4096,
+        "do_sample": false,
+        "temperature": 0.0
+      },
+      "repeats": 1,
+      "filter_list": [
+        {
+          "name": "custom-extract",
+          "filter": [
+            {
+              "function": "regex",
+              "regex_pattern": "answer is \\(?([ABCDEFGHIJ])\\)?"
+            },
+            {
+              "function": "take_first"
+            }
+          ]
+        }
+      ],
+      "should_decontaminate": false,
+      "metadata": {
+        "version": 3.1,
+        "pretrained": "RedHatAI/gemma-4-31B-it-FP8-block",
+        "revision": "f676bf1357a9d27a77932dd4bf19d619724e74f6",
+        "tokenizer": "RedHatAI/gemma-4-31B-it-FP8-block",
+        "tokenizer_revision": "f676bf1357a9d27a77932dd4bf19d619724e74f6",
+        "dtype": "auto",
+        "max_model_len": 16384,
+        "gpu_memory_utilization": 0.9,
+        "max_num_seqs": 64,
+        "tensor_parallel_size": 1,
+        "trust_remote_code": true,
+        "enforce_eager": false,
+        "config_source": "/home/stefan0/llms/qwen3.6-27B/.venv-vllm022/lib/python3.12/site-packages/lm_eval/tasks/mmlu_pro/mmlu_pro_law.yaml"
+      }
+    },
+    "mmlu_pro_math": {
+      "task": "mmlu_pro_math",
+      "task_alias": "math",
+      "dataset_path": "TIGER-Lab/MMLU-Pro",
+      "test_split": "test",
+      "fewshot_split": "validation",
+      "process_docs": "functools.partial(<function process_docs at 0x7649ee443100>, subject='math')",
+      "doc_to_text": "functools.partial(<function format_cot_example at 0x7649df738b80>, including_answer=False)",
+      "doc_to_target": "answer",
+      "unsafe_code": false,
+      "description": "The following are multiple choice questions (with answers) about math. Think step by step and then finish your answer with \"the answer is (X)\" where X is the correct letter choice.\n",
+      "target_delimiter": " ",
+      "fewshot_delimiter": "\n\n",
+      "fewshot_config": {
+        "sampler": "first_n",
+        "split": "validation",
+        "process_docs": "functools.partial(<function process_docs at 0x7649ee443100>, subject='math')",
+        "fewshot_indices": null,
+        "samples": null,
+        "doc_to_text": "functools.partial(<function format_cot_example at 0x7649df738b80>, including_answer=False)",
+        "doc_to_choice": null,
+        "doc_to_target": "functools.partial(<function format_cot_target at 0x7649ee4414e0>, including_answer=True)",
+        "gen_prefix": null,
+        "fewshot_delimiter": "\n\n",
+        "target_delimiter": " "
+      },
+      "num_fewshot": 5,
+      "metric_list": [
+        {
+          "metric": "exact_match",
+          "aggregation": "mean",
+          "higher_is_better": true,
+          "ignore_case": true,
+          "ignore_punctuation": true
+        }
+      ],
+      "output_type": "generate_until",
+      "generation_kwargs": {
+        "until": [
+          "<|im_end|>"
+        ],
+        "max_gen_toks": 4096,
+        "do_sample": false,
+        "temperature": 0.0
+      },
+      "repeats": 1,
+      "filter_list": [
+        {
+          "name": "custom-extract",
+          "filter": [
+            {
+              "function": "regex",
+              "regex_pattern": "answer is \\(?([ABCDEFGHIJ])\\)?"
+            },
+            {
+              "function": "take_first"
+            }
+          ]
+        }
+      ],
+      "should_decontaminate": false,
+      "metadata": {
+        "version": 3.1,
+        "pretrained": "RedHatAI/gemma-4-31B-it-FP8-block",
+        "revision": "f676bf1357a9d27a77932dd4bf19d619724e74f6",
+        "tokenizer": "RedHatAI/gemma-4-31B-it-FP8-block",
+        "tokenizer_revision": "f676bf1357a9d27a77932dd4bf19d619724e74f6",
+        "dtype": "auto",
+        "max_model_len": 16384,
+        "gpu_memory_utilization": 0.9,
+        "max_num_seqs": 64,
+        "tensor_parallel_size": 1,
+        "trust_remote_code": true,
+        "enforce_eager": false,
+        "config_source": "/home/stefan0/llms/qwen3.6-27B/.venv-vllm022/lib/python3.12/site-packages/lm_eval/tasks/mmlu_pro/mmlu_pro_math.yaml"
+      }
+    },
+    "mmlu_pro_other": {
+      "task": "mmlu_pro_other",
+      "task_alias": "other",
+      "dataset_path": "TIGER-Lab/MMLU-Pro",
+      "test_split": "test",
+      "fewshot_split": "validation",
+      "process_docs": "functools.partial(<function process_docs at 0x7649ee443100>, subject='other')",
+      "doc_to_text": "functools.partial(<function format_cot_example at 0x7649df738b80>, including_answer=False)",
+      "doc_to_target": "answer",
+      "unsafe_code": false,
+      "description": "The following are multiple choice questions (with answers) about other. Think step by step and then finish your answer with \"the answer is (X)\" where X is the correct letter choice.\n",
+      "target_delimiter": " ",
+      "fewshot_delimiter": "\n\n",
+      "fewshot_config": {
+        "sampler": "first_n",
+        "split": "validation",
+        "process_docs": "functools.partial(<function process_docs at 0x7649ee443100>, subject='other')",
+        "fewshot_indices": null,
+        "samples": null,
+        "doc_to_text": "functools.partial(<function format_cot_example at 0x7649df738b80>, including_answer=False)",
+        "doc_to_choice": null,
+        "doc_to_target": "functools.partial(<function format_cot_target at 0x7649ee4414e0>, including_answer=True)",
+        "gen_prefix": null,
+        "fewshot_delimiter": "\n\n",
+        "target_delimiter": " "
+      },
+      "num_fewshot": 5,
+      "metric_list": [
+        {
+          "metric": "exact_match",
+          "aggregation": "mean",
+          "higher_is_better": true,
+          "ignore_case": true,
+          "ignore_punctuation": true
+        }
+      ],
+      "output_type": "generate_until",
+      "generation_kwargs": {
+        "until": [
+          "<|im_end|>"
+        ],
+        "max_gen_toks": 4096,
+        "do_sample": false,
+        "temperature": 0.0
+      },
+      "repeats": 1,
+      "filter_list": [
+        {
+          "name": "custom-extract",
+          "filter": [
+            {
+              "function": "regex",
+              "regex_pattern": "answer is \\(?([ABCDEFGHIJ])\\)?"
+            },
+            {
+              "function": "take_first"
+            }
+          ]
+        }
+      ],
+      "should_decontaminate": false,
+      "metadata": {
+        "version": 3.1,
+        "pretrained": "RedHatAI/gemma-4-31B-it-FP8-block",
+        "revision": "f676bf1357a9d27a77932dd4bf19d619724e74f6",
+        "tokenizer": "RedHatAI/gemma-4-31B-it-FP8-block",
+        "tokenizer_revision": "f676bf1357a9d27a77932dd4bf19d619724e74f6",
+        "dtype": "auto",
+        "max_model_len": 16384,
+        "gpu_memory_utilization": 0.9,
+        "max_num_seqs": 64,
+        "tensor_parallel_size": 1,
+        "trust_remote_code": true,
+        "enforce_eager": false,
+        "config_source": "/home/stefan0/llms/qwen3.6-27B/.venv-vllm022/lib/python3.12/site-packages/lm_eval/tasks/mmlu_pro/mmlu_pro_other.yaml"
+      }
+    },
+    "mmlu_pro_philosophy": {
+      "task": "mmlu_pro_philosophy",
+      "task_alias": "philosophy",
+      "dataset_path": "TIGER-Lab/MMLU-Pro",
+      "test_split": "test",
+      "fewshot_split": "validation",
+      "process_docs": "functools.partial(<function process_docs at 0x7649ee443100>, subject='philosophy')",
+      "doc_to_text": "functools.partial(<function format_cot_example at 0x7649df738b80>, including_answer=False)",
+      "doc_to_target": "answer",
+      "unsafe_code": false,
+      "description": "The following are multiple choice questions (with answers) about philosophy. Think step by step and then finish your answer with \"the answer is (X)\" where X is the correct letter choice.\n",
+      "target_delimiter": " ",
+      "fewshot_delimiter": "\n\n",
+      "fewshot_config": {
+        "sampler": "first_n",
+        "split": "validation",
+        "process_docs": "functools.partial(<function process_docs at 0x7649ee443100>, subject='philosophy')",
+        "fewshot_indices": null,
+        "samples": null,
+        "doc_to_text": "functools.partial(<function format_cot_example at 0x7649df738b80>, including_answer=False)",
+        "doc_to_choice": null,
+        "doc_to_target": "functools.partial(<function format_cot_target at 0x7649ee4414e0>, including_answer=True)",
+        "gen_prefix": null,
+        "fewshot_delimiter": "\n\n",
+        "target_delimiter": " "
+      },
+      "num_fewshot": 5,
+      "metric_list": [
+        {
+          "metric": "exact_match",
+          "aggregation": "mean",
+          "higher_is_better": true,
+          "ignore_case": true,
+          "ignore_punctuation": true
+        }
+      ],
+      "output_type": "generate_until",
+      "generation_kwargs": {
+        "until": [
+          "<|im_end|>"
+        ],
+        "max_gen_toks": 4096,
+        "do_sample": false,
+        "temperature": 0.0
+      },
+      "repeats": 1,
+      "filter_list": [
+        {
+          "name": "custom-extract",
+          "filter": [
+            {
+              "function": "regex",
+              "regex_pattern": "answer is \\(?([ABCDEFGHIJ])\\)?"
+            },
+            {
+              "function": "take_first"
+            }
+          ]
+        }
+      ],
+      "should_decontaminate": false,
+      "metadata": {
+        "version": 3.1,
+        "pretrained": "RedHatAI/gemma-4-31B-it-FP8-block",
+        "revision": "f676bf1357a9d27a77932dd4bf19d619724e74f6",
+        "tokenizer": "RedHatAI/gemma-4-31B-it-FP8-block",
+        "tokenizer_revision": "f676bf1357a9d27a77932dd4bf19d619724e74f6",
+        "dtype": "auto",
+        "max_model_len": 16384,
+        "gpu_memory_utilization": 0.9,
+        "max_num_seqs": 64,
+        "tensor_parallel_size": 1,
+        "trust_remote_code": true,
+        "enforce_eager": false,
+        "config_source": "/home/stefan0/llms/qwen3.6-27B/.venv-vllm022/lib/python3.12/site-packages/lm_eval/tasks/mmlu_pro/mmlu_pro_philosophy.yaml"
+      }
+    },
+    "mmlu_pro_physics": {
+      "task": "mmlu_pro_physics",
+      "task_alias": "physics",
+      "dataset_path": "TIGER-Lab/MMLU-Pro",
+      "test_split": "test",
+      "fewshot_split": "validation",
+      "process_docs": "functools.partial(<function process_docs at 0x7649ee443100>, subject='physics')",
+      "doc_to_text": "functools.partial(<function format_cot_example at 0x7649df738b80>, including_answer=False)",
+      "doc_to_target": "answer",
+      "unsafe_code": false,
+      "description": "The following are multiple choice questions (with answers) about physics. Think step by step and then finish your answer with \"the answer is (X)\" where X is the correct letter choice.\n",
+      "target_delimiter": " ",
+      "fewshot_delimiter": "\n\n",
+      "fewshot_config": {
+        "sampler": "first_n",
+        "split": "validation",
+        "process_docs": "functools.partial(<function process_docs at 0x7649ee443100>, subject='physics')",
+        "fewshot_indices": null,
+        "samples": null,
+        "doc_to_text": "functools.partial(<function format_cot_example at 0x7649df738b80>, including_answer=False)",
+        "doc_to_choice": null,
+        "doc_to_target": "functools.partial(<function format_cot_target at 0x7649ee4414e0>, including_answer=True)",
+        "gen_prefix": null,
+        "fewshot_delimiter": "\n\n",
+        "target_delimiter": " "
+      },
+      "num_fewshot": 5,
+      "metric_list": [
+        {
+          "metric": "exact_match",
+          "aggregation": "mean",
+          "higher_is_better": true,
+          "ignore_case": true,
+          "ignore_punctuation": true
+        }
+      ],
+      "output_type": "generate_until",
+      "generation_kwargs": {
+        "until": [
+          "<|im_end|>"
+        ],
+        "max_gen_toks": 4096,
+        "do_sample": false,
+        "temperature": 0.0
+      },
+      "repeats": 1,
+      "filter_list": [
+        {
+          "name": "custom-extract",
+          "filter": [
+            {
+              "function": "regex",
+              "regex_pattern": "answer is \\(?([ABCDEFGHIJ])\\)?"
+            },
+            {
+              "function": "take_first"
+            }
+          ]
+        }
+      ],
+      "should_decontaminate": false,
+      "metadata": {
+        "version": 3.1,
+        "pretrained": "RedHatAI/gemma-4-31B-it-FP8-block",
+        "revision": "f676bf1357a9d27a77932dd4bf19d619724e74f6",
+        "tokenizer": "RedHatAI/gemma-4-31B-it-FP8-block",
+        "tokenizer_revision": "f676bf1357a9d27a77932dd4bf19d619724e74f6",
+        "dtype": "auto",
+        "max_model_len": 16384,
+        "gpu_memory_utilization": 0.9,
+        "max_num_seqs": 64,
+        "tensor_parallel_size": 1,
+        "trust_remote_code": true,
+        "enforce_eager": false,
+        "config_source": "/home/stefan0/llms/qwen3.6-27B/.venv-vllm022/lib/python3.12/site-packages/lm_eval/tasks/mmlu_pro/mmlu_pro_physics.yaml"
+      }
+    },
+    "mmlu_pro_psychology": {
+      "task": "mmlu_pro_psychology",
+      "task_alias": "psychology",
+      "dataset_path": "TIGER-Lab/MMLU-Pro",
+      "test_split": "test",
+      "fewshot_split": "validation",
+      "process_docs": "functools.partial(<function process_docs at 0x7649ee443100>, subject='psychology')",
+      "doc_to_text": "functools.partial(<function format_cot_example at 0x7649df738b80>, including_answer=False)",
+      "doc_to_target": "answer",
+      "unsafe_code": false,
+      "description": "The following are multiple choice questions (with answers) about psychology. Think step by step and then finish your answer with \"the answer is (X)\" where X is the correct letter choice.\n",
+      "target_delimiter": " ",
+      "fewshot_delimiter": "\n\n",
+      "fewshot_config": {
+        "sampler": "first_n",
+        "split": "validation",
+        "process_docs": "functools.partial(<function process_docs at 0x7649ee443100>, subject='psychology')",
+        "fewshot_indices": null,
+        "samples": null,
+        "doc_to_text": "functools.partial(<function format_cot_example at 0x7649df738b80>, including_answer=False)",
+        "doc_to_choice": null,
+        "doc_to_target": "functools.partial(<function format_cot_target at 0x7649ee4414e0>, including_answer=True)",
+        "gen_prefix": null,
+        "fewshot_delimiter": "\n\n",
+        "target_delimiter": " "
+      },
+      "num_fewshot": 5,
+      "metric_list": [
+        {
+          "metric": "exact_match",
+          "aggregation": "mean",
+          "higher_is_better": true,
+          "ignore_case": true,
+          "ignore_punctuation": true
+        }
+      ],
+      "output_type": "generate_until",
+      "generation_kwargs": {
+        "until": [
+          "<|im_end|>"
+        ],
+        "max_gen_toks": 4096,
+        "do_sample": false,
+        "temperature": 0.0
+      },
+      "repeats": 1,
+      "filter_list": [
+        {
+          "name": "custom-extract",
+          "filter": [
+            {
+              "function": "regex",
+              "regex_pattern": "answer is \\(?([ABCDEFGHIJ])\\)?"
+            },
+            {
+              "function": "take_first"
+            }
+          ]
+        }
+      ],
+      "should_decontaminate": false,
+      "metadata": {
+        "version": 3.1,
+        "pretrained": "RedHatAI/gemma-4-31B-it-FP8-block",
+        "revision": "f676bf1357a9d27a77932dd4bf19d619724e74f6",
+        "tokenizer": "RedHatAI/gemma-4-31B-it-FP8-block",
+        "tokenizer_revision": "f676bf1357a9d27a77932dd4bf19d619724e74f6",
+        "dtype": "auto",
+        "max_model_len": 16384,
+        "gpu_memory_utilization": 0.9,
+        "max_num_seqs": 64,
+        "tensor_parallel_size": 1,
+        "trust_remote_code": true,
+        "enforce_eager": false,
+        "config_source": "/home/stefan0/llms/qwen3.6-27B/.venv-vllm022/lib/python3.12/site-packages/lm_eval/tasks/mmlu_pro/mmlu_pro_psychology.yaml"
+      }
+    }
+  },
+  "versions": {
+    "mmlu_pro": "2.0",
+    "mmlu_pro_biology": 3.1,
+    "mmlu_pro_business": 3.1,
+    "mmlu_pro_chemistry": 3.1,
+    "mmlu_pro_computer_science": 3.1,
+    "mmlu_pro_economics": 3.1,
+    "mmlu_pro_engineering": 3.1,
+    "mmlu_pro_health": 3.1,
+    "mmlu_pro_history": 3.1,
+    "mmlu_pro_law": 3.1,
+    "mmlu_pro_math": 3.1,
+    "mmlu_pro_other": 3.1,
+    "mmlu_pro_philosophy": 3.1,
+    "mmlu_pro_physics": 3.1,
+    "mmlu_pro_psychology": 3.1
+  },
+  "n-shot": {
+    "mmlu_pro": 5,
+    "mmlu_pro_biology": 5,
+    "mmlu_pro_business": 5,
+    "mmlu_pro_chemistry": 5,
+    "mmlu_pro_computer_science": 5,
+    "mmlu_pro_economics": 5,
+    "mmlu_pro_engineering": 5,
+    "mmlu_pro_health": 5,
+    "mmlu_pro_history": 5,
+    "mmlu_pro_law": 5,
+    "mmlu_pro_math": 5,
+    "mmlu_pro_other": 5,
+    "mmlu_pro_philosophy": 5,
+    "mmlu_pro_physics": 5,
+    "mmlu_pro_psychology": 5
+  },
+  "higher_is_better": {
+    "mmlu_pro": {
+      "exact_match": true
+    },
+    "mmlu_pro_biology": {
+      "exact_match": true
+    },
+    "mmlu_pro_business": {
+      "exact_match": true
+    },
+    "mmlu_pro_chemistry": {
+      "exact_match": true
+    },
+    "mmlu_pro_computer_science": {
+      "exact_match": true
+    },
+    "mmlu_pro_economics": {
+      "exact_match": true
+    },
+    "mmlu_pro_engineering": {
+      "exact_match": true
+    },
+    "mmlu_pro_health": {
+      "exact_match": true
+    },
+    "mmlu_pro_history": {
+      "exact_match": true
+    },
+    "mmlu_pro_law": {
+      "exact_match": true
+    },
+    "mmlu_pro_math": {
+      "exact_match": true
+    },
+    "mmlu_pro_other": {
+      "exact_match": true
+    },
+    "mmlu_pro_philosophy": {
+      "exact_match": true
+    },
+    "mmlu_pro_physics": {
+      "exact_match": true
+    },
+    "mmlu_pro_psychology": {
+      "exact_match": true
+    }
+  },
+  "n-samples": {
+    "mmlu_pro_biology": {
+      "original": 717,
+      "effective": 50
+    },
+    "mmlu_pro_business": {
+      "original": 789,
+      "effective": 50
+    },
+    "mmlu_pro_chemistry": {
+      "original": 1132,
+      "effective": 50
+    },
+    "mmlu_pro_computer_science": {
+      "original": 410,
+      "effective": 50
+    },
+    "mmlu_pro_economics": {
+      "original": 844,
+      "effective": 50
+    },
+    "mmlu_pro_engineering": {
+      "original": 969,
+      "effective": 50
+    },
+    "mmlu_pro_health": {
+      "original": 818,
+      "effective": 50
+    },
+    "mmlu_pro_history": {
+      "original": 381,
+      "effective": 50
+    },
+    "mmlu_pro_law": {
+      "original": 1101,
+      "effective": 50
+    },
+    "mmlu_pro_math": {
+      "original": 1351,
+      "effective": 50
+    },
+    "mmlu_pro_other": {
+      "original": 924,
+      "effective": 50
+    },
+    "mmlu_pro_philosophy": {
+      "original": 499,
+      "effective": 50
+    },
+    "mmlu_pro_physics": {
+      "original": 1299,
+      "effective": 50
+    },
+    "mmlu_pro_psychology": {
+      "original": 798,
+      "effective": 50
+    }
+  },
+  "config": {
+    "model": "vllm",
+    "model_args": {
+      "pretrained": "RedHatAI/gemma-4-31B-it-FP8-block",
+      "revision": "f676bf1357a9d27a77932dd4bf19d619724e74f6",
+      "tokenizer": "RedHatAI/gemma-4-31B-it-FP8-block",
+      "tokenizer_revision": "f676bf1357a9d27a77932dd4bf19d619724e74f6",
+      "dtype": "auto",
+      "max_model_len": 16384,
+      "gpu_memory_utilization": 0.9,
+      "max_num_seqs": 64,
+      "tensor_parallel_size": 1,
+      "trust_remote_code": true,
+      "enforce_eager": false
+    },
+    "batch_size": "auto",
+    "batch_sizes": [],
+    "device": "cuda:0",
+    "use_cache": "cache/lm_eval-rerun/gemma4_31b_it__fp8_mmlu_pro",
+    "limit": 50.0,
+    "bootstrap_iters": 100000,
+    "gen_kwargs": {
+      "temperature": 0.0,
+      "max_gen_toks": 4096,
+      "until": [
+        "<|im_end|>"
+      ]
+    },
+    "random_seed": 1234,
+    "numpy_seed": 1234,
+    "torch_seed": 1234,
+    "fewshot_seed": 1234
+  },
+  "git_hash": null,
+  "date": 1780966401.757008,
+  "pretty_env_info": "PyTorch version: 2.11.0+cu130\nIs debug build: False\nCUDA used to build PyTorch: 13.0\nROCM used to build PyTorch: N/A\n\nOS: Ubuntu 24.04.4 LTS (x86_64)\nGCC version: (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nClang version: Could not collect\nCMake version: Could not collect\nLibc version: glibc-2.39\n\nPython version: 3.12.3 (main, Mar 23 2026, 19:04:32) [GCC 13.3.0] (64-bit runtime)\nPython platform: Linux-6.8.0-124-generic-x86_64-with-glibc2.39\nIs CUDA available: True\nCUDA runtime version: 13.0.88\nCUDA_MODULE_LOADING set to: \nGPU models and configuration: GPU 0: NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition\nNvidia driver version: 595.71.05\ncuDNN version: Could not collect\nIs XPU available: False\nHIP runtime version: N/A\nMIOpen runtime version: N/A\nIs XNNPACK available: True\nCaching allocator config: N/A\n\nCPU:\nArchitecture:                            x86_64\nCPU op-mode(s):                          32-bit, 64-bit\nAddress sizes:                           52 bits physical, 57 bits virtual\nByte Order:                              Little Endian\nCPU(s):                                  12\nOn-line CPU(s) list:                     0-11\nVendor ID:                               GenuineIntel\nModel name:                              Intel(R) Xeon(R) w3-2423\nCPU family:                              6\nModel:                                   143\nThread(s) per core:                      2\nCore(s) per socket:                      6\nSocket(s):                               1\nStepping:                                8\nCPU(s) scaling MHz:                      61%\nCPU max MHz:                             4200.0000\nCPU min MHz:                             800.0000\nBogoMIPS:                                4224.00\nFlags:                                   fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf tsc_known_freq pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid dca sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb cat_l3 cat_l2 cdp_l3 intel_ppin cdp_l2 ssbd mba ibrs ibpb stibp ibrs_enhanced tpr_shadow flexpriority ept vpid ept_ad fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid cqm rdt_a avx512f avx512dq rdseed adx smap avx512ifma clflushopt clwb intel_pt avx512cd sha_ni avx512bw avx512vl xsaveopt xsavec xgetbv1 xsaves cqm_llc cqm_occup_llc cqm_mbm_total cqm_mbm_local split_lock_detect user_shstk avx_vnni avx512_bf16 wbnoinvd dtherm ida arat pln pts hwp hwp_act_window hwp_epp hwp_pkg_req vnmi avx512vbmi umip pku ospke waitpkg avx512_vbmi2 gfni vaes vpclmulqdq avx512_vnni avx512_bitalg tme avx512_vpopcntdq la57 rdpid bus_lock_detect cldemote movdiri movdir64b enqcmd fsrm md_clear serialize tsxldtrk pconfig arch_lbr ibt amx_bf16 avx512_fp16 amx_tile amx_int8 flush_l1d arch_capabilities ibpb_exit_to_user\nVirtualization:                          VT-x\nL1d cache:                               288 KiB (6 instances)\nL1i cache:                               192 KiB (6 instances)\nL2 cache:                                12 MiB (6 instances)\nL3 cache:                                15 MiB (1 instance)\nNUMA node(s):                            1\nNUMA node0 CPU(s):                       0-11\nVulnerability Gather data sampling:      Not affected\nVulnerability Indirect target selection: Not affected\nVulnerability Itlb multihit:             Not affected\nVulnerability L1tf:                      Not affected\nVulnerability Mds:                       Not affected\nVulnerability Meltdown:                  Not affected\nVulnerability Mmio stale data:           Not affected\nVulnerability Reg file data sampling:    Not affected\nVulnerability Retbleed:                  Not affected\nVulnerability Spec rstack overflow:      Not affected\nVulnerability Spec store bypass:         Mitigation; Speculative Store Bypass disabled via prctl\nVulnerability Spectre v1:                Mitigation; usercopy/swapgs barriers and __user pointer sanitization\nVulnerability Spectre v2:                Mitigation; Enhanced / Automatic IBRS; IBPB conditional; PBRSB-eIBRS SW sequence; BHI BHI_DIS_S\nVulnerability Srbds:                     Not affected\nVulnerability Tsa:                       Not affected\nVulnerability Tsx async abort:           Not affected\nVulnerability Vmscape:                   Mitigation; IBPB before exit to userspace\n\nVersions of relevant libraries:\n[pip3] numpy==2.3.5\n[pip3] nvidia-cublas==13.1.0.3\n[pip3] nvidia-cuda-cupti==13.0.85\n[pip3] nvidia-cuda-nvrtc==13.0.88\n[pip3] nvidia-cuda-runtime==13.0.96\n[pip3] nvidia-cudnn-cu13==9.19.0.56\n[pip3] nvidia-cudnn-frontend==1.18.0\n[pip3] nvidia-cufft==12.0.0.61\n[pip3] nvidia-curand==10.4.0.35\n[pip3] nvidia-cusolver==12.0.4.66\n[pip3] nvidia-cusparse==12.6.3.3\n[pip3] nvidia-cusparselt-cu13==0.8.0\n[pip3] nvidia-nccl-cu13==2.28.9\n[pip3] nvidia-nvjitlink==13.0.88\n[pip3] nvidia-nvtx==13.0.85\n[pip3] tokenspeed-triton==3.7.10.post20260531\n[pip3] torch==2.11.0\n[pip3] torch_c_dlpack_ext==0.1.5\n[pip3] torchaudio==2.11.0\n[pip3] torchvision==0.26.0\n[pip3] triton==3.6.0\n[conda] Could not collect",
+  "transformers_version": "5.10.2",
+  "lm_eval_version": "0.4.12",
+  "upper_git_hash": null,
+  "tokenizer_pad_token": [
+    "<pad>",
+    "0"
+  ],
+  "tokenizer_eos_token": [
+    "<eos>",
+    "1"
+  ],
+  "tokenizer_bos_token": [
+    "<bos>",
+    "2"
+  ],
+  "eot_token_id": 1,
+  "max_length": 16384,
+  "task_hashes": {},
+  "model_source": "vllm",
+  "model_name": "RedHatAI/gemma-4-31B-it-FP8-block",
+  "model_name_sanitized": "RedHatAI__gemma-4-31B-it-FP8-block",
+  "system_instruction": null,
+  "system_instruction_sha": null,
+  "fewshot_as_multiturn": true,
+  "chat_template": "{%- macro format_parameters(properties, required, filter_keys=false) -%}\n    {%- set standard_keys = ['description', 'type', 'properties', 'required', 'nullable'] -%}\n    {%- set ns = namespace(found_first=false) -%}\n    {%- for key, value in properties | dictsort -%}\n        {%- set add_comma = false -%}\n        {%- if not filter_keys or key not in standard_keys -%}\n            {%- if ns.found_first %},{% endif -%}\n            {%- set ns.found_first = true -%}\n            {{ key }}:{\n            {%- if value['description'] -%}\n                description:<|\"|>{{ value['description'] }}<|\"|>\n                {%- set add_comma = true -%}\n            {%- endif -%}\n            {%- if value['type'] | upper == 'STRING' -%}\n                {%- if value['enum'] -%}\n                    {%- if add_comma %},{%- else -%} {%- set add_comma = true -%} {% endif -%}\n                    enum:{{ format_argument(value['enum']) }}\n                {%- endif -%}\n            {%- elif value['type'] | upper == 'ARRAY' -%}\n                {%- if value['items'] is mapping and value['items'] -%}\n                    {%- if add_comma %},{%- else -%} {%- set add_comma = true -%} {% endif -%}\n                    items:{\n                    {%- set ns_items = namespace(found_first=false) -%}\n                    {%- for item_key, item_value in value['items'] | dictsort -%}\n                        {%- if item_value is not none -%}\n                            {%- if ns_items.found_first %},{% endif -%}\n                            {%- set ns_items.found_first = true -%}\n                            {%- if item_key == 'properties' -%}\n                                properties:{\n                                {%- if item_value is mapping -%}\n                                    {{- format_parameters(item_value, value['items']['required'] | default([])) -}}\n                                {%- endif -%}\n                                }\n                            {%- elif item_key == 'required' -%}\n                                required:[\n                                {%- for req_item in item_value -%}\n                                    <|\"|>{{- req_item -}}<|\"|>\n                                    {%- if not loop.last %},{% endif -%}\n                                {%- endfor -%}\n                                ]\n                            {%- elif item_key == 'type' -%}\n                                {%- if item_value is string -%}\n                                    type:{{ format_argument(item_value | upper) }}\n                                {%- else -%}\n                                    type:{{ format_argument(item_value | map('upper') | list) }}\n                                {%- endif -%}\n                            {%- else -%}\n                                {{ item_key }}:{{ format_argument(item_value) }}\n                            {%- endif -%}\n                        {%- endif -%}\n                    {%- endfor -%}\n                    }\n                {%- endif -%}\n            {%- endif -%}\n            {%- if value['nullable'] %}\n                {%- if add_comma %},{%- else -%} {%- set add_comma = true -%} {% endif -%}\n                nullable:true\n            {%- endif -%}\n            {%- if value['type'] | upper == 'OBJECT' -%}\n                {%- if value['properties'] is defined and value['properties'] is mapping -%}\n                    {%- if add_comma %},{%- else -%} {%- set add_comma = true -%} {% endif -%}\n                    properties:{\n                    {{- format_parameters(value['properties'], value['required'] | default([])) -}}\n                    }\n                {%- elif value is mapping -%}\n                    {%- if add_comma %},{%- else -%} {%- set add_comma = true -%} {% endif -%}\n                    properties:{\n                    {{- format_parameters(value, value['required'] | default([]), filter_keys=true) -}}\n                    }\n                {%- endif -%}\n                {%- if value['required'] -%}\n                    {%- if add_comma %},{%- else -%} {%- set add_comma = true -%} {% endif -%}\n                    required:[\n                    {%- for item in value['required'] | default([]) -%}\n                        <|\"|>{{- item -}}<|\"|>\n                        {%- if not loop.last %},{% endif -%}\n                    {%- endfor -%}\n                    ]\n                {%- endif -%}\n            {%- endif -%}\n            {%- if add_comma %},{%- else -%} {%- set add_comma = true -%} {% endif -%}\n            type:<|\"|>{{ value['type'] | upper }}<|\"|>}\n        {%- endif -%}\n    {%- endfor -%}\n{%- endmacro -%}\n{%- macro format_function_declaration(tool_data) -%}\n    declaration:{{- tool_data['function']['name'] -}}{description:<|\"|>{{- tool_data['function']['description'] -}}<|\"|>\n    {%- set params = tool_data['function']['parameters'] -%}\n    {%- if params -%}\n        ,parameters:{\n        {%- if params['properties'] -%}\n            properties:{ {{- format_parameters(params['properties'], params['required']) -}} },\n        {%- endif -%}\n        {%- if params['required'] -%}\n            required:[\n            {%- for item in params['required'] -%}\n                <|\"|>{{- item -}}<|\"|>\n                {{- ',' if not loop.last -}}\n            {%- endfor -%}\n            ],\n        {%- endif -%}\n        {%- if params['type'] -%}\n            type:<|\"|>{{- params['type'] | upper -}}<|\"|>}\n        {%- endif -%}\n    {%- endif -%}\n    {%- if 'response' in tool_data['function'] -%}\n        {%- set response_declaration = tool_data['function']['response'] -%}\n        ,response:{\n        {%- if response_declaration['description'] -%}\n            description:<|\"|>{{- response_declaration['description'] -}}<|\"|>,\n        {%- endif -%}\n        {%- if response_declaration['type'] | upper == 'OBJECT' -%}\n            type:<|\"|>{{- response_declaration['type'] | upper -}}<|\"|>}\n        {%- endif -%}\n    {%- endif -%}\n    }\n{%- endmacro -%}\n{%- macro format_argument(argument, escape_keys=True) -%}\n    {%- if argument is string -%}\n        {{- '<|\"|>' + argument + '<|\"|>' -}}\n    {%- elif argument is boolean -%}\n        {{- 'true' if argument else 'false' -}}\n    {%- elif argument is mapping -%}\n        {{- '{' -}}\n        {%- set ns = namespace(found_first=false) -%}\n        {%- for key, value in argument | dictsort -%}\n            {%- if ns.found_first %},{% endif -%}\n            {%- set ns.found_first = true -%}\n            {%- if escape_keys -%}\n                {{- '<|\"|>' + key + '<|\"|>' -}}\n            {%- else -%}\n                {{- key -}}\n            {%- endif -%}\n            :{{- format_argument(value, escape_keys=escape_keys) -}}\n        {%- endfor -%}\n        {{- '}' -}}\n    {%- elif argument is sequence -%}\n        {{- '[' -}}\n        {%- for item in argument -%}\n            {{- format_argument(item, escape_keys=escape_keys) -}}\n            {%- if not loop.last %},{% endif -%}\n        {%- endfor -%}\n        {{- ']' -}}\n    {%- else -%}\n        {{- argument -}}\n    {%- endif -%}\n{%- endmacro -%}\n{%- macro strip_thinking(text) -%}\n    {%- set ns = namespace(result='') -%}\n    {%- for part in text.split('<channel|>') -%}\n        {%- if '<|channel>' in part -%}\n            {%- set ns.result = ns.result + part.split('<|channel>')[0] -%}\n        {%- else -%}\n            {%- set ns.result = ns.result + part -%}\n        {%- endif -%}\n    {%- endfor -%}\n    {{- ns.result | trim -}}\n{%- endmacro -%}\n\n{%- macro format_tool_response_block(tool_name, response) -%}\n    {{- '<|tool_response>' -}}\n    {%- if response is mapping -%}\n        {{- 'response:' + tool_name + '{' -}}\n        {%- for key, value in response | dictsort -%}\n            {{- key -}}:{{- format_argument(value, escape_keys=False) -}}\n            {%- if not loop.last %},{% endif -%}\n        {%- endfor -%}\n        {{- '}' -}}\n    {%- else -%}\n        {{- 'response:' + tool_name + '{value:' + format_argument(response, escape_keys=False) + '}' -}}\n    {%- endif -%}\n    {{- '<tool_response|>' -}}\n{%- endmacro -%}\n\n{%- set ns = namespace(prev_message_type=None) -%}\n{%- set loop_messages = messages -%}\n{{- bos_token -}}\n{#- Handle System/Tool Definitions Block -#}\n{%- if (enable_thinking is defined and enable_thinking) or tools or messages[0]['role'] in ['system', 'developer'] -%}\n    {{- '<|turn>system\\n' -}}\n    {#- Inject Thinking token at the very top of the FIRST system turn -#}\n    {%- if enable_thinking is defined and enable_thinking -%}\n        {{- '<|think|>\\n' -}}\n        {%- set ns.prev_message_type = 'think' -%}\n    {%- endif -%}\n    {%- if messages[0]['role'] in ['system', 'developer'] -%}\n        {%- if messages[0]['content'] is string -%}\n            {{- messages[0]['content'] | trim -}}\n        {%- elif messages[0]['content'] is sequence -%}\n            {%- for item in messages[0]['content'] -%}\n                {{- item['text'] | trim + ' '-}}\n            {%- endfor -%}\n        {%- endif -%}\n        {%- set loop_messages = messages[1:] -%}\n    {%- endif -%}\n    {%- if tools -%}\n        {%- for tool in tools %}\n            {{- '<|tool>' -}}\n            {{- format_function_declaration(tool) | trim -}}\n            {{- '<tool|>' -}}\n        {%- endfor %}\n        {%- set ns.prev_message_type = 'tool' -%}\n    {%- endif -%}\n    {{- '<turn|>\\n' -}}\n{%- endif %}\n\n{#- Pre-scan: find last user message index for reasoning guard -#}\n{%- set ns_turn = namespace(last_user_idx=-1) -%}\n{%- for i in range(loop_messages | length) -%}\n    {%- if loop_messages[i]['role'] == 'user' -%}\n        {%- set ns_turn.last_user_idx = i -%}\n    {%- endif -%}\n{%- endfor -%}\n\n{#- Loop through messages -#}\n{%- for message in loop_messages -%}\n    {%- if message['role'] != 'tool' -%}\n    {%- set ns.prev_message_type = None -%}\n    {%- set role = 'model' if message['role'] == 'assistant' else message['role'] -%}\n    {#- Detect continuation: suppress duplicate <|turn>model when previous non-tool message was also assistant -#}\n    {%- set prev_nt = namespace(role=None, found=false) -%}\n    {%- if loop.index0 > 0 -%}\n        {%- for j in range(loop.index0 - 1, -1, -1) -%}\n            {%- if not prev_nt.found -%}\n                {%- if loop_messages[j]['role'] != 'tool' -%}\n                    {%- set prev_nt.role = loop_messages[j]['role'] -%}\n                    {%- set prev_nt.found = true -%}\n                {%- endif -%}\n            {%- endif -%}\n        {%- endfor -%}\n    {%- endif -%}\n    {%- set continue_same_model_turn = (role == 'model' and prev_nt.role == 'assistant') -%}\n    {%- if not continue_same_model_turn -%}\n        {{- '<|turn>' + role + '\\n' }}\n    {%- endif -%}\n\n    {#- Render reasoning/reasoning_content as thinking channel -#}\n    {%- set thinking_text = message.get('reasoning') or message.get('reasoning_content') -%}\n    {%- if thinking_text and loop.index0 > ns_turn.last_user_idx and message.get('tool_calls') -%}\n        {{- '<|channel>thought\\n' + thinking_text + '\\n<channel|>' -}}\n    {%- endif -%}\n\n            {%- if message['tool_calls'] -%}\n                {%- for tool_call in message['tool_calls'] -%}\n                    {%- set function = tool_call['function'] -%}\n                    {{- '<|tool_call>call:' + function['name'] + '{' -}}\n                    {%- if function['arguments'] is mapping -%}\n                        {%- set ns_args = namespace(found_first=false) -%}\n                        {%- for key, value in function['arguments'] | dictsort -%}\n                            {%- if ns_args.found_first %},{% endif -%}\n                            {%- set ns_args.found_first = true -%}\n                            {{- key -}}:{{- format_argument(value, escape_keys=False) -}}\n                        {%- endfor -%}\n                    {%- elif function['arguments'] is string -%}\n                        {{- function['arguments'] -}}\n                    {%- endif -%}\n                    {{- '}<tool_call|>' -}}\n                {%- endfor -%}\n                {%- set ns.prev_message_type = 'tool_call' -%}\n            {%- endif -%}\n\n            {%- set ns_tr_out = namespace(flag=false) -%}\n            {%- if message.get('tool_responses') -%}\n                {#- Legacy: tool_responses embedded on the assistant message (Google/Gemma native) -#}\n                {%- for tool_response in message['tool_responses'] -%}\n                    {{- format_tool_response_block(tool_response['name'] | default('unknown'), tool_response['response']) -}}\n                    {%- set ns_tr_out.flag = true -%}\n                    {%- set ns.prev_message_type = 'tool_response' -%}\n                {%- endfor -%}\n            {%- elif message.get('tool_calls') -%}\n                {#- OpenAI Chat Completions: forward-scan consecutive role:tool messages -#}\n                {%- set ns_tool_scan = namespace(stopped=false) -%}\n                {%- for k in range(loop.index0 + 1, loop_messages | length) -%}\n                    {%- if ns_tool_scan.stopped -%}\n                    {%- elif loop_messages[k]['role'] != 'tool' -%}\n                        {%- set ns_tool_scan.stopped = true -%}\n                    {%- else -%}\n                        {%- set follow = loop_messages[k] -%}\n                        {#- Resolve tool_call_id to function name -#}\n                        {%- set ns_tname = namespace(name=follow.get('name') | default('unknown')) -%}\n                        {%- for tc in message['tool_calls'] -%}\n                            {%- if tc.get('id') == follow.get('tool_call_id') -%}\n                                {%- set ns_tname.name = tc['function']['name'] -%}\n                            {%- endif -%}\n                        {%- endfor -%}\n                        {#- Handle content as string or content-parts array -#}\n                        {%- set tool_body = follow.get('content') -%}\n                        {%- if tool_body is string -%}\n                            {{- format_tool_response_block(ns_tname.name, tool_body) -}}\n                        {%- elif tool_body is sequence and tool_body is not string -%}\n                            {%- set ns_txt = namespace(s='') -%}\n                            {%- for part in tool_body -%}\n                                {%- if part.get('type') == 'text' -%}\n                                    {%- set ns_txt.s = ns_txt.s + (part.get('text') | default('')) -%}\n                                {%- endif -%}\n                            {%- endfor -%}\n                            {{- format_tool_response_block(ns_tname.name, ns_txt.s) -}}\n                            {%- for part in tool_body -%}\n                                {%- if part.get('type') == 'image' -%}\n                                    {{- '<|image|>' -}}\n                                {%- elif part.get('type') == 'audio' -%}\n                                    {{- '<|audio|>' -}}\n                                {%- elif part.get('type') == 'video' -%}\n                                    {{- '<|video|>' -}}\n                                {%- endif -%}\n                            {%- endfor -%}\n                        {%- else -%}\n                            {{- format_tool_response_block(ns_tname.name, tool_body) -}}\n                        {%- endif -%}\n                        {%- set ns_tr_out.flag = true -%}\n                        {%- set ns.prev_message_type = 'tool_response' -%}\n                    {%- endif -%}\n                {%- endfor -%}\n            {%- endif -%}\n\n            {%- set captured_content -%}\n            {%- if message['content'] is string -%}\n                {%- if role == 'model' -%}\n                    {{- strip_thinking(message['content']) -}}\n                {%- else -%}\n                    {{- message['content'] | trim -}}\n                {%- endif -%}\n            {%- elif message['content'] is sequence -%}\n                {%- for item in message['content'] -%}\n                    {%- if item['type'] == 'text' -%}\n                        {%- if role == 'model' -%}\n                            {{- strip_thinking(item['text']) -}}\n                        {%- else -%}\n                            {{- item['text'] | trim -}}\n                        {%- endif -%}\n                    {%- elif item['type'] == 'image' -%}\n                        {{- '<|image|>' -}}\n                        {%- set ns.prev_message_type = 'image' -%}\n                    {%- elif item['type'] == 'audio' -%}\n                        {{- '<|audio|>' -}}\n                        {%- set ns.prev_message_type = 'audio' -%}\n                    {%- elif item['type'] == 'video' -%}\n                        {{- '<|video|>' -}}\n                        {%- set ns.prev_message_type = 'video' -%}\n                    {%- endif -%}\n                {%- endfor -%}\n            {%- endif -%}\n            {%- endset -%}\n\n            {{- captured_content -}}\n            {%- set has_content = captured_content | trim | length > 0 -%}\n\n        {%- if ns.prev_message_type == 'tool_call' and not ns_tr_out.flag -%}\n            {{- '<|tool_response>' -}}\n        {%- elif not (ns_tr_out.flag and not has_content) -%}\n            {{- '<turn|>\\n' -}}\n        {%- endif -%}\n    {%- endif -%}\n{%- endfor -%}\n\n{%- if add_generation_prompt -%}\n    {%- if ns.prev_message_type != 'tool_response' and ns.prev_message_type != 'tool_call' -%}\n        {{- '<|turn>model\\n' -}}\n        {%- if not enable_thinking | default(false) -%}\n            {{- '<|channel>thought\\n<channel|>' -}}\n        {%- endif -%}\n    {%- endif -%}\n{%- endif -%}",
+  "chat_template_sha": "36e3a42e5cf14cd0020e72d92e1fdd9970f59b82170e421f0cbe1bb42bead3f0",
+  "total_evaluation_time_seconds": "509.04964254499646"
+}

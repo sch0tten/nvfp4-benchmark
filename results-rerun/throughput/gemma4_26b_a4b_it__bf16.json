@@ -1,0 +1,53 @@
+{
+  "id": "gemma4_26b_a4b_it__bf16",
+  "lengths": {
+    "128": {
+      "prompt_tokens": 128,
+      "ttft_s": 0.0338,
+      "ttft_s_stdev": 0.0027,
+      "decode_tok_s": 152.65,
+      "e2e_s_256out": 1.7108
+    },
+    "1024": {
+      "prompt_tokens": 1024,
+      "ttft_s": 0.0322,
+      "ttft_s_stdev": 0.0003,
+      "decode_tok_s": 148.64,
+      "e2e_s_256out": 1.7545
+    },
+    "4096": {
+      "prompt_tokens": 4096,
+      "ttft_s": 0.0372,
+      "ttft_s_stdev": 0.0009,
+      "decode_tok_s": 141.69,
+      "e2e_s_256out": 1.844
+    },
+    "16384": {
+      "prompt_tokens": 16384,
+      "ttft_s": 0.0515,
+      "ttft_s_stdev": 0.0013,
+      "decode_tok_s": 124.83,
+      "e2e_s_256out": 2.1023
+    },
+    "32768": {
+      "prompt_tokens": 32768,
+      "ttft_s": 0.0815,
+      "ttft_s_stdev": 0.0042,
+      "decode_tok_s": 110.6,
+      "e2e_s_256out": 2.3962
+    }
+  },
+  "repo": "google/gemma-4-26B-A4B-it",
+  "revision": "20da991ab4afab98e8f910c4a2e8f4fbefc404ad",
+  "family": "Gemma-4-26B-A4B-it",
+  "type": "moe",
+  "format": "bf16",
+  "memory": {},
+  "config": {
+    "max_num_seqs": 1,
+    "max_model_len": 65536,
+    "gpu_memory_utilization": 0.9,
+    "decode_n": 256,
+    "repeats": 3
+  }
+}
